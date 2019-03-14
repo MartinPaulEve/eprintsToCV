@@ -57,7 +57,7 @@ class TemplateBuilder:
                     else:
                         self.logger.debug("Calling shell script {0}".format(shell_script))
                         subprocess.call(shell_script, shell=True)
-            return True
+        return True
 
     def _eprint_substitute(self, section, rule):
         """

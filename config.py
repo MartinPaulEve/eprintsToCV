@@ -77,7 +77,7 @@ default_types = ['unedited_books', 'edited_books', 'peer_reviewed_articles']
 # this controls output documents
 # a dictionary of lists, the first entry in each list should be a template, the second a file destination, then a series
 # of operations required to create the output (the latter optional)
-output_rules = {'html': ['templates/CV',
+output_rules = {'html': ['templates/HTML',
                          'output/Eve-CV.html'],
 
                 'pdf': ['templates/PDF',
@@ -89,10 +89,12 @@ output_rules = {'html': ['templates/CV',
                         'rm output/Eve-CV-PDF.html']}
 
 # define the section template
-section_template = {'pdf': '<div id="{0}">{1}</div>'}
+section_template = {'pdf': '<div id="{0}">{1}</div>',
+                    'html': '<div id="{0}">{1}</div>'}
 
 # define the header template
-header_template = {'pdf': '<h2 class="sectionheader">{0} ({1})</h2>'}
+header_template = {'pdf': '<h2 class="sectionheader">{0} ({1})</h2>',
+                   'html': '<h2 class="sectionheader">{0} ({1})</h2>'}
 
 # define the item templates
 item_templates = {'pdf': {
@@ -104,7 +106,19 @@ item_templates = {'pdf': {
     'other_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
     'reviews': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
     'book_chapters': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, in <i>[[book_title]]</i>[[editors]] ([[publisher]]: [[year]])</span></p>',
-    'conference_items': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[event_title]]</i>, [[event_location]], [[year]]</span></p>'}}
+    'conference_items': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[event_title]]</i>, [[event_location]], [[year]]</span></p>'},
+
+    'html': {
+        'all_books': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]][[trailingcommacreators]]<a href="[[uri]]"><i>[[title]]</i></a>[[editors]] ([[publisher]]: [[year]])</span></p>',
+        'unedited_books': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]][[trailingcommacreators]]<a href="[[uri]]"><i>[[title]]</i></a>[[editors]] ([[publisher]]: [[year]])</span></p>',
+        'edited_books': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]][[trailingcommacreators]]<a href="[[uri]]"><i>[[title]]</i></a>[[editors]] ([[publisher]]: [[year]])</span></p>',
+        'all_peer_reviewed_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
+        'peer_reviewed_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
+        'other_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
+        'reviews': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
+        'book_chapters': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, in <i>[[book_title]]</i>[[editors]] ([[publisher]]: [[year]])</span></p>',
+        'conference_items': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[event_title]]</i>, [[event_location]], [[year]]</span></p>'}
+}
 
 # define the item templates for new date lines
 item_templates_new_date = {'pdf': {
@@ -116,4 +130,16 @@ item_templates_new_date = {'pdf': {
     'other_articles': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
     'reviews': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
     'book_chapters': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, in <i>[[book_title]]</i>[[editors]] ([[publisher]]: [[year]])</span></p>',
-    'conference_items': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[event_title]]</i>, [[event_location]], [[year]]</span></p>'}}
+    'conference_items': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[event_title]]</i>, [[event_location]], [[year]]</span></p>'},
+
+    'html': {
+        'all_books': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]][[trailingcommacreators]]<a href="[[uri]]"><i>[[title]]</i></a>[[editors]] ([[publisher]]: [[year]])</span></p>',
+        'unedited_books': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]][[trailingcommacreators]]<a href="[[uri]]"><i>[[title]]</i></a>[[editors]] ([[publisher]]: [[year]])</span></p>',
+        'edited_books': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]][[trailingcommacreators]]<a href="[[uri]]"><i>[[title]]</i></a>[[editors]] ([[publisher]]: [[year]])</span></p>',
+        'all_peer_reviewed_articles': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
+        'peer_reviewed_articles': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
+        'other_articles': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
+        'reviews': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
+        'book_chapters': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, in <i>[[book_title]]</i>[[editors]] ([[publisher]]: [[year]])</span></p>',
+        'conference_items': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[event_title]]</i>, [[event_location]], [[year]]</span></p>'}
+}
