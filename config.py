@@ -98,10 +98,10 @@ item_templates = {'pdf': {
     'all_books': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]][[trailingcommacreators]]<a href="[[uri]]"><i>[[title]]</i></a>[[editors]] ([[publisher]]: [[year]])</span></p>',
     'unedited_books': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]][[trailingcommacreators]]<a href="[[uri]]"><i>[[title]]</i></a>[[editors]] ([[publisher]]: [[year]])</span></p>',
     'edited_books': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]][[trailingcommacreators]]<a href="[[uri]]"><i>[[title]]</i></a>[[editors]] ([[publisher]]: [[year]])</span></p>',
-    'all_peer_reviewed_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">{0}, &ldquo;<a href="{5}">{1}</a>&rdquo;, <i>{2}</i>{3}, {4}</span></p>',
-    'peer_reviewed_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">{0}, &ldquo;<a href="{5}">{1}</a>&rdquo;, <i>{2}</i>{3}, {4}</span></p>',
-    'other_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">{0}, &ldquo;<a href="{5}">{1}</a>&rdquo;, <i>{2}</i>{3}, {4}</span></p>',
-    'reviews': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">{0}, &ldquo;<a href="{5}">{1}</a>&rdquo;, <i>{2}</i>{3}, {4}</span></p>',
+    'all_peer_reviewed_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
+    'peer_reviewed_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
+    'other_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
+    'reviews': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
     'book_chapters': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">{0}, &ldquo;<a href="{6}">{1}</a>&rdquo;, in <i>{2}</i>{3} ({4}: {5})</span></p>',
     'conference_items': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">{0}, &ldquo;<a href="{5}">{1}</a>&rdquo;, <i>{2}</i>, {4}, {3}</span></p>'}}
 
