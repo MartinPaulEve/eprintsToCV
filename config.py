@@ -154,3 +154,13 @@ item_templates_new_date = {'pdf': {
         'book_chapters': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, in <i>[[book_title]]</i>[[editors]] ([[publisher]]: [[year]])  [[oa_status]]</span></p>',
         'conference_items': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[event_title]]</i>, [[event_location]], [[year]]  [[oa_status]]</span></p>'}
 }
+
+# the email address for OA status display
+email = "martin.eve@bbk.ac.uk"
+
+# basic OA availability
+oa_status = {'html': ' [<a href="[[oa_uri]]" style="color:[[oa_color]]">Download[[doc]]</a>]'}
+
+# basic OA nonavailability
+non_oa_status = {'html': ' [<a href="mailto:[[email]]?subject=Request to read [[title]]">Request to read</a>]'}
+

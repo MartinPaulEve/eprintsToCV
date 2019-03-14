@@ -82,7 +82,7 @@ class TemplateBuilder:
         output = ''
 
         for item in section_items:
-            creators, editors, the_date, volume, oa_status, item = self._build_creators(item)
+            creators, editors, the_date, volume, oa_status, item = self._build_creators(item, rule)
 
             if current_date != the_date:
                 line = self._substitute_item_template(item_templates_new_date, the_date, creators, editors, volume,
@@ -128,7 +128,7 @@ class TemplateBuilder:
 
         return line
 
-    def _build_creators(self, item):
+    def _build_creators(self, item, rule):
         """
         Builds a list of creators, editors, dates and titles for an item
         :param item: The item on which to work
@@ -195,33 +195,44 @@ class TemplateBuilder:
         elif 'number' in item and 'volume' in item:
             volume = ' {0}({1})'.format(str(item['volume']), str(item['number']))
 
-        # todo: this needs to be moved into a config template
         oa_status = ""
-        if 'oa_status' in item:
-            if item['oa_status'] == 'green' or item['oa_status'] == 'gold':
-                oa_color = 'goldenrod' if item['oa_status'] == 'gold' else item['oa_status']
-                if 'files' in item:
-                    oa_status = "[<a href=\"" + item['files'][0][
-                        'url'] + "\" style=\"color:" + oa_color + "\">Download</a>]"
-                elif 'documents' in item:
-                    if len(item['documents']) > 1:
-                        for doc in item['documents']:
-                            if 'formatdesc' in doc:
-                                oa_status += " [<a href=\"" + doc[
-                                    'uri'] + "\" style=\"color:" + oa_color + "\">Download " + doc[
-                                                 'formatdesc'] + "</a>]"
-                            else:
-                                oa_status += " [<a href=\"" + doc[
-                                    'uri'] + "\" style=\"color:" + oa_color + "\">Download</a>]"
+
+        if rule in self.config.oa_status:
+            oa_status = self.config.oa_status[rule]
+            non_oa_status = self.config.non_oa_status[rule]
+
+            if 'oa_status' in item:
+                if item['oa_status'] == 'green' or item['oa_status'] == 'gold':
+                    oa_color = 'goldenrod' if item['oa_status'] == 'gold' else item['oa_status']
+                    if 'files' in item:
+                        oa_status = oa_status.replace('[[oa_uri]]',
+                                                      item["files"][0]["url"]).replace('[[oa_color]]',
+                                                                                       oa_color).replace('[[doc]]',
+                                                                                                         '')
+                    elif 'documents' in item:
+                        if len(item['documents']) > 1:
+                            for doc in item['documents']:
+                                if 'formatdesc' in doc:
+                                    oa_status = oa_status.replace('[[oa_uri]]',
+                                                                  doc["uri"]).replace('[[oa_color]]',
+                                                                                      oa_color).replace(
+                                        '[[doc]]', doc["formatdesc"])
+                                else:
+                                    oa_status = oa_status.replace('[[oa_uri]]',
+                                                                  doc["uri"]).replace('[[oa_color]]',
+                                                                                      oa_color).replace(
+                                        '[[doc]]', '')
+                        else:
+                            oa_status = oa_status.replace('[[oa_uri]]',
+                                                          item["documents"][0]["uri"]).replace('[[oa_color]]',
+                                                                              oa_color).replace(
+                                '[[doc]]', '')
                     else:
-                        oa_status = "[<a href=\"" + item['documents'][0][
-                            'uri'] + "\" style=\"color:" + oa_color + "\">Download</a>]"
-                else:
-                    oa_status = "[<a href=\"mailto:martin.eve@bbk.ac.uk?subject=Request to read '" + item[
-                        'title'] + "'\">Request to read</a>]"
-        else:
-            oa_status = "[<a href=\"mailto:martin.eve@bbk.ac.uk?subject=Request to read'" + item[
-                'title'] + "'\">Request to read</a>]"
+                        oa_status = non_oa_status.replace('[[email]]', self.config.email).replace('[[title]]',
+                                                                                                  item['title'])
+            else:
+                oa_status = non_oa_status.replace('[[email]]', self.config.email).replace('[[title]]',
+                                                                                          item['title'])
 
         return creators, editors, the_date, volume, oa_status, item
 
