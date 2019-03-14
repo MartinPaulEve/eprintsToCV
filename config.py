@@ -102,8 +102,8 @@ item_templates = {'pdf': {
     'peer_reviewed_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
     'other_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
     'reviews': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
-    'book_chapters': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">{0}, &ldquo;<a href="{6}">{1}</a>&rdquo;, in <i>{2}</i>{3} ({4}: {5})</span></p>',
-    'conference_items': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">{0}, &ldquo;<a href="{5}">{1}</a>&rdquo;, <i>{2}</i>, {4}, {3}</span></p>'}}
+    'book_chapters': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, in <i>[[book_title]]</i>[[editors]] ([[publisher]]: [[year]])</span></p>',
+    'conference_items': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[event_title]]</i>, [[event_location]], [[year]]</span></p>'}}
 
 # define the item templates for new date lines
 item_templates_new_date = {'pdf': {
@@ -114,5 +114,5 @@ item_templates_new_date = {'pdf': {
     'peer_reviewed_articles': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
     'other_articles': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
     'reviews': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
-    'book_chapters': '<p class="anitemnewdate genericitem"><span class="prefix bold">{5}</span><span class="bibitem">{0}, &ldquo;<a href="{6}">{1}</a>&rdquo;, in <i>{2}</i>{3} ({4}: {5})</span></p>',
-    'conference_items': '<p class="anitemnewdate genericitem"><span class="prefix bold">{3}</span><span class="bibitem">{0}, &ldquo;<a href="{5}">{1}</a>&rdquo;, <i>{2}</i>, {4}, {3}</span></p>'}}
+    'book_chapters': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, in <i>[[book_title]]</i>[[editors]] ([[publisher]]: [[year]])</span></p>',
+    'conference_items': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[event_title]]</i>, [[event_location]], [[year]]</span></p>'}}
