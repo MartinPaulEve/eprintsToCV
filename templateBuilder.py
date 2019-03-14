@@ -82,13 +82,15 @@ class TemplateBuilder:
         output = ''
 
         for item in section_items:
-            creators, editors, the_date, volume, item = self._build_creators(item)
+            creators, editors, the_date, volume, oa_status, item = self._build_creators(item)
 
             if current_date != the_date:
-                line = self._substitute_item_template(item_templates_new_date, the_date, creators, editors, volume, item)
+                line = self._substitute_item_template(item_templates_new_date, the_date, creators, editors, volume,
+                                                      oa_status, item)
                 current_date = the_date
             else:
-                line = self._substitute_item_template(item_templates, the_date, creators, editors, volume, item)
+                line = self._substitute_item_template(item_templates, the_date, creators, editors, volume,
+                                                      oa_status, item)
 
             output += line
 
@@ -98,15 +100,16 @@ class TemplateBuilder:
 
         return section_output
 
-    def _substitute_item_template(self, template, the_date, creators, editors, volume, item):
+    def _substitute_item_template(self, template, the_date, creators, editors, volume, oa_status, item):
         """
-        Substitutes variables into an item template. There are five special tags: year, creators, editors,
-        trailingcommacreators, and volume. The rest are drawn from the item dictionary.
+        Substitutes variables into an item template. There are six special tags: year, creators, editors,
+        trailingcommacreators, oa_status, and volume. The rest are drawn from the item dictionary.
         :param template: the template string
         :param the_date: the date to use
         :param creators: a creators string
         :param editors: an editors string
         :param volume: a volume string
+        :param oa_status: a string with an OA link
         :param item: the eprints item
         :return: a formatted output line
         """
@@ -114,6 +117,7 @@ class TemplateBuilder:
         line = template.replace('[[year]]', str(the_date))
         line = line.replace('[[creators]]', creators)
         line = line.replace('[[editors]]', editors)
+        line = line.replace('[[oa_status]]', oa_status)
         line = line.replace('[[volume]]', volume)
         line = line.replace('[[trailingcommacreators]]', ', ' if len(creators) > 0 else '')
 
@@ -191,7 +195,35 @@ class TemplateBuilder:
         elif 'number' in item and 'volume' in item:
             volume = ' {0}({1})'.format(str(item['volume']), str(item['number']))
 
-        return creators, editors, the_date, volume, item
+        # todo: this needs to be moved into a config template
+        oa_status = ""
+        if 'oa_status' in item:
+            if item['oa_status'] == 'green' or item['oa_status'] == 'gold':
+                oa_color = 'goldenrod' if item['oa_status'] == 'gold' else item['oa_status']
+                if 'files' in item:
+                    oa_status = "[<a href=\"" + item['files'][0][
+                        'url'] + "\" style=\"color:" + oa_color + "\">Download</a>]"
+                elif 'documents' in item:
+                    if len(item['documents']) > 1:
+                        for doc in item['documents']:
+                            if 'formatdesc' in doc:
+                                oa_status += " [<a href=\"" + doc[
+                                    'uri'] + "\" style=\"color:" + oa_color + "\">Download " + doc[
+                                                 'formatdesc'] + "</a>]"
+                            else:
+                                oa_status += " [<a href=\"" + doc[
+                                    'uri'] + "\" style=\"color:" + oa_color + "\">Download</a>]"
+                    else:
+                        oa_status = "[<a href=\"" + item['documents'][0][
+                            'uri'] + "\" style=\"color:" + oa_color + "\">Download</a>]"
+                else:
+                    oa_status = "[<a href=\"mailto:martin.eve@bbk.ac.uk?subject=Request to read '" + item[
+                        'title'] + "'\">Request to read</a>]"
+        else:
+            oa_status = "[<a href=\"mailto:martin.eve@bbk.ac.uk?subject=Request to read'" + item[
+                'title'] + "'\">Request to read</a>]"
+
+        return creators, editors, the_date, volume, oa_status, item
 
     def _substitute_template(self, template, rule):
         """
