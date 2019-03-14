@@ -2,7 +2,7 @@
 
 Usage:
   genCV.py fetch [TYPES ...] [--debug] [--refresh]
-  genCV.py make <template_file> <output_types>...  [--debug]
+  genCV.py make OUTPUT_TYPES... [--debug]
   genCV.py (-h | --help)
   genCV.py --version
 
@@ -14,7 +14,7 @@ Options:
 
 Info:
 
-Valid options for "types" for the fetch operation are:
+Valid options for "types" for the fetch operation, by default, are:
 
 * all_books
 * unedited_books
@@ -25,12 +25,15 @@ Valid options for "types" for the fetch operation are:
 * reviews
 * book_chapters
 * conference_items
+
+These can be extended using the configuration mapping system.
 """
 from docopt import docopt
 import logging
 import pygogo as gogo
 import config
 from repository import Repository
+from templateBuilder import TemplateBuilder
 
 app = "ePrints CV Generator 2.0"
 
@@ -52,15 +55,17 @@ def main(args):
 
     logger.info(app)
 
-    if 'fetch' in args:
-        repo = Repository(config, logger, args['--refresh'])
+    repo = Repository(config, logger, args['--refresh'])
+
+    if 'fetch' in args and args['fetch']:
         if len(args['TYPES']) > 0:
             repo.fetch(args['TYPES'])
         else:
             repo.fetch(config.default_types)
 
-    elif 'build' in args:
-        pass
+    elif 'make' in args and args['make']:
+        template_builder = TemplateBuilder(repo, config, logger)
+        template_builder.build(args['OUTPUT_TYPES'])
 
 
 if __name__ == "__main__":

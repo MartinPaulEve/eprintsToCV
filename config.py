@@ -73,3 +73,46 @@ storage = {'json': 'data/eprints.json',
 
 # this controls the default types to parse if nothing is given on the command line
 default_types = ['unedited_books', 'edited_books', 'peer_reviewed_articles']
+
+# this controls output documents
+# a dictionary of lists, the first entry in each list should be a template, the second a file destination, then a series
+# of operations required to create the output (the latter optional)
+output_rules = {'html': ['templates/CV',
+                         'output/Eve-CV.html'],
+
+                'pdf': ['templates/PDF',
+                        'output/Eve-CV-PDF.html',
+                        'screen -S serve -d -m bash -c "python3 -m http.server"',
+                        'google-chrome --headless --disable-gpu --print-to-pdf=./output/Eve-CV.pdf --virtual-time-budget=50000000 --run-all-compositor-stages-before-draw --disable-web-security http://127.0.0.1:8000/out.html',
+                        'screen -S serve -X quit',
+                        'rm output/Eve-CV-PDF.html']}
+
+# define the section template
+section_template = {'pdf': '<div id="{0}">{1}</div>'}
+
+# define the header template
+header_template = {'pdf': '<h2 class="sectionheader">{0} ({1})</h2>'}
+
+# define the item templates
+item_templates = {'pdf': {
+    'all_books': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]][[trailingcommacreators]]<a href="[[uri]]"><i>[[title]]</i></a>[[editors]] ([[publisher]]: [[year]])</span></p>',
+    'unedited_books': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]][[trailingcommacreators]]<a href="[[uri]]"><i>[[title]]</i></a>[[editors]] ([[publisher]]: [[year]])</span></p>',
+    'edited_books': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[creators]][[trailingcommacreators]]<a href="[[uri]]"><i>[[title]]</i></a>[[editors]] ([[publisher]]: [[year]])</span></p>',
+    'all_peer_reviewed_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">{0}, &ldquo;<a href="{5}">{1}</a>&rdquo;, <i>{2}</i>{3}, {4}</span></p>',
+    'peer_reviewed_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">{0}, &ldquo;<a href="{5}">{1}</a>&rdquo;, <i>{2}</i>{3}, {4}</span></p>',
+    'other_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">{0}, &ldquo;<a href="{5}">{1}</a>&rdquo;, <i>{2}</i>{3}, {4}</span></p>',
+    'reviews': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">{0}, &ldquo;<a href="{5}">{1}</a>&rdquo;, <i>{2}</i>{3}, {4}</span></p>',
+    'book_chapters': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">{0}, &ldquo;<a href="{6}">{1}</a>&rdquo;, in <i>{2}</i>{3} ({4}: {5})</span></p>',
+    'conference_items': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">{0}, &ldquo;<a href="{5}">{1}</a>&rdquo;, <i>{2}</i>, {4}, {3}</span></p>'}}
+
+# define the item templates for new date lines
+item_templates_new_date = {'pdf': {
+    'all_books': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]][[trailingcommacreators]]<a href="[[uri]]"><i>[[title]]</i></a>[[editors]] ([[publisher]]: [[year]])</span></p>',
+    'unedited_books': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]][[trailingcommacreators]]<a href="[[uri]]"><i>[[title]]</i></a>[[editors]] ([[publisher]]: [[year]])</span></p>',
+    'edited_books': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]][[trailingcommacreators]]<a href="[[uri]]"><i>[[title]]</i></a>[[editors]] ([[publisher]]: [[year]])</span></p>',
+    'all_peer_reviewed_articles': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
+    'peer_reviewed_articles': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
+    'other_articles': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
+    'reviews': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[publication]]</i>[[volume]], [[year]]</span></p>',
+    'book_chapters': '<p class="anitemnewdate genericitem"><span class="prefix bold">{5}</span><span class="bibitem">{0}, &ldquo;<a href="{6}">{1}</a>&rdquo;, in <i>{2}</i>{3} ({4}: {5})</span></p>',
+    'conference_items': '<p class="anitemnewdate genericitem"><span class="prefix bold">{3}</span><span class="bibitem">{0}, &ldquo;<a href="{5}">{1}</a>&rdquo;, <i>{2}</i>, {4}, {3}</span></p>'}}

@@ -6,6 +6,12 @@ import json
 
 class Repository:
     def __init__(self, config, logger, refresh):
+        """
+        Initialise a repository
+        :param config: a configuration
+        :param logger: a logger
+        :param refresh: whether fetch operations should hit the remote endpoint even if there is an on-disk copy
+        """
         self.config = config
         self.logger = logger
         self.url = self._build_repo_url()
@@ -13,6 +19,22 @@ class Repository:
         self._json_loaded = False
         self.refresh = refresh
         self._type_safe = False
+
+    def __getattr__(self, name):
+        """
+        A generic getter for undefined attributes that we use to return types (e.g. repo.book_sections)
+        :param name: the name of the attr
+        """
+        try:
+            with open(self.config.storage[name], "r") as json_in_file:
+                data = json_in_file.readlines()
+                output = []
+                for line in data:
+                    output.append(json.loads(line))
+                return output
+        except EnvironmentError:
+            self.logger.error('Cannot load json from {0}'.format(self.config.storage[name]))
+            return None
 
     def _build_repo_url(self):
         """
@@ -82,6 +104,13 @@ class Repository:
                 return False
 
     def _parse_json(self, types, load_json=False, check_types=False):
+        """
+        Parse JSON from eprints into sections
+        :param types: the types to parse
+        :param load_json: whether this function should attempt to load the JSON from the repo
+        :param check_types: whether this function should attempt to check type validity
+        :return: True if successful, otherwise False
+        """
         self.logger.debug("Attempting to parse types {0}".format(types))
 
         # perform the prechecks
@@ -92,20 +121,28 @@ class Repository:
         self.logger.debug("Building output list")
         outputs = self._build_output_types_list()
 
+        return self._write_sections_to_disk(outputs)
+
+    def _write_sections_to_disk(self, outputs):
+        """
+        Writes the outputs to the disk for fast access
+        :param outputs: the outputs to write
+        :return: True if success, otherwise False
+        """
         for output_type, output_list in outputs.items():
             self.logger.debug("Writing {0} to {1}".format(output_type, self.config.storage[output_type]))
             try:
                 # write the JSON to the output file
                 with open(self.config.storage[output_type], "w") as json_out_file:
                     for output in output_list:
-                        json_out_file.write(json.dumps(output))
-                    return True
+                        json_out_file.write(json.dumps(output) + '\n')
             except EnvironmentError:
                 self.logger.error('Cannot write json data to {0}'.format(self.config.storage["json"]))
                 # try to delete the file
                 os.remove(self.config.storage[output_type])
                 self._json_loaded = False
                 return False
+        return True
 
     def _build_output_types_list(self):
         """
