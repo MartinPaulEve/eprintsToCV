@@ -4,7 +4,7 @@ eprints = {
     'user': 'Eve=3AMartin_Paul=3A=3A'}
 
 # this controls the output headings in the template
-section_headings = {'all_books': "BOOKS",
+section_headings = {'pdf': {'all_books': "BOOKS",
                     'unedited_books': "BOOKS",
                     'edited_books': "EDITED VOLUMES",
                     'all_peer_reviewed_articles': "PEER-REVIEWED ARTICLES",
@@ -12,7 +12,18 @@ section_headings = {'all_books': "BOOKS",
                     'other_articles': "OTHER ARTICLES / MEDIA / INTERVIEWS",
                     'reviews': "REVIEWS",
                     'book_chapters': "BOOK CHAPTERS",
-                    'conference_items': "CONFERENCE PAPERS/EVENTS"}
+                    'conference_items': "CONFERENCE PAPERS/EVENTS"},
+
+                    'html': {'all_books': "Books",
+                    'unedited_books': "Books",
+                    'edited_books': "Edited Volumes",
+                    'all_peer_reviewed_articles': "Peer-Reviewed Articles",
+                    'peer_reviewed_articles': "Peer-Reviewed Articles",
+                    'other_articles': "Other Articles / Media/ Interviews",
+                    'reviews': "Reviews",
+                    'book_chapters': "Book Chapters",
+                    'conference_items': "Conference Papers/Events"}
+                    }
 
 # this determines the peer review conditions for each input type
 peer_reviewed = {'all_books': "ANY",

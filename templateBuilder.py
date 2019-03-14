@@ -92,7 +92,7 @@ class TemplateBuilder:
 
             output += line
 
-        header_output = header_template.format(self.config.section_headings[section], len(section_items))
+        header_output = header_template.format(self.config.section_headings[rule][section], len(section_items))
 
         section_output = section_template.format(section, header_output + output)
 
@@ -203,7 +203,7 @@ class TemplateBuilder:
         for match in matches:
             self.logger.debug("Processing template section '{0}'".format(match))
             section = re.compile(r'{{' + match + '}}')
-            if match in self.config.section_headings:
+            if match in self.config.section_headings[rule]:
                 substitute = self._eprint_substitute(match, rule)
             else:
                 try:

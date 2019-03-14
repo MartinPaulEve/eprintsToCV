@@ -27,6 +27,8 @@ Valid options for "types" for the fetch operation, by default, are:
 * conference_items
 
 These can be extended using the configuration mapping system.
+
+The tool includes two output options by default, "html" and "pdf".
 """
 from docopt import docopt
 import logging
