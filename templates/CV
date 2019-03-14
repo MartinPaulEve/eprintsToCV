@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Martin Paul Eve</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/pagedJS/css/pagedjs.css">
+  <link rel="stylesheet" href="static/pagedJS/css/cv.css">
+  <script src="http://use.typekit.net/ria4wnw.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <script type="text/javascript" src="static/pagedJS/js/pagedjs.js"></script>
+</head>
+
+<body>
+<div id="cassius-content">
+
+<div class="main">
+  {{PersonInfo}}
+
+  {{BioInfo}}
+</div>
+
+  {{AcademicAppointments}}
+
+  {{Education}}
+
+  {{book_ned}}
+  {{book_ed}}
+  {{article_ref_nev}}
+  {{book_section}}
+  
+  {{DigitalHumanities}}
+
+  {{article_rev}}
+
+  {{Admin}}
+
+  {{Funding}}
+
+  {{article_nef_nev}}
+
+  {{conference_item}}
+
+  {{ProAffils}}
+
+  {{TeacherTraining}}
+
+  {{Teaching}}
+
+  {{Postgrads}}
+
+  {{Organize}}
+
+  {{PeerReview}}
+
+  {{Perform}}
+
+  {{InfoTech}}
+
+
+</div>
+<article id="article">
+</article>
+
+</body>
+</html>
