@@ -1,7 +1,7 @@
 """Eprints CV Generator.
 
 Usage:
-  genCV.py fetch <types>...  [--debug] [--refresh]
+  genCV.py fetch [TYPES ...] [--debug] [--refresh]
   genCV.py make <template_file> <output_types>...  [--debug]
   genCV.py (-h | --help)
   genCV.py --version
@@ -54,7 +54,11 @@ def main(args):
 
     if 'fetch' in args:
         repo = Repository(config, logger, args['--refresh'])
-        repo.fetch(args['types'])
+        if len(args['TYPES']) > 0:
+            repo.fetch(args['TYPES'])
+        else:
+            repo.fetch(config.default_types)
+
     elif 'build' in args:
         pass
 

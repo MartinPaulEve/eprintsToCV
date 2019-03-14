@@ -26,15 +26,26 @@ peer_reviewed = {'all_books': "ANY",
                  'conference_items': "ANY"}
 
 # this determines the editorial conditions for each input type
-edited = {'all_books': "ANY",
-          'unedited_books': False,
-          'edited_books': True,
-          'all_peer_reviewed_articles': "ANY",
-          'peer_reviewed_articles': "ANY",
-          'other_articles': "ANY",
-          'reviews': "ANY",
-          'book_chapters': "ANY",
-          'conference_items': "ANY"}
+editorial = {'all_books': "ANY",
+             'unedited_books': False,
+             'edited_books': True,
+             'all_peer_reviewed_articles': "ANY",
+             'peer_reviewed_articles': "ANY",
+             'other_articles': "ANY",
+             'reviews': "ANY",
+             'book_chapters': "ANY",
+             'conference_items': "ANY"}
+
+# this determines the book review conditions for each input type (if the text starts with "Review of"
+book_review = {'all_books': False,
+               'unedited_books': False,
+               'edited_books': False,
+               'all_peer_reviewed_articles': False,
+               'peer_reviewed_articles': False,
+               'other_articles': False,
+               'reviews': True,
+               'book_chapters': False,
+               'conference_items': False}
 
 # this determines the underlying database type in eprints
 eprints_db = {'all_books': "book",
@@ -48,4 +59,17 @@ eprints_db = {'all_books': "book",
               'conference_items': "conference_item"}
 
 # this section determines data storage locations
-storage = {'json': 'data/eprints.json'}
+storage = {'json': 'data/eprints.json',
+           'all_books': "data/all_books.json",
+           'unedited_books': "data/unedited_books.json",
+           'edited_books': "data/edited_books.json",
+           'all_peer_reviewed_articles': "data/all_peer_reviewed_articles.json",
+           'peer_reviewed_articles': "data/peer_reviewed_articles.json",
+           'other_articles': "data/other_articles.json",
+           'reviews': "data/reviews.json",
+           'book_chapters': "data/book_sections.json",
+           'conference_items': "data/conference_items.json"
+           }
+
+# this controls the default types to parse if nothing is given on the command line
+default_types = ['unedited_books', 'edited_books', 'peer_reviewed_articles']
