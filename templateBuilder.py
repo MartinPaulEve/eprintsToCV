@@ -1,5 +1,6 @@
 import os
 import re
+import subprocess
 from datetime import datetime
 
 
@@ -10,6 +11,11 @@ class TemplateBuilder:
         self.logger = logger
 
     def build(self, rules):
+        """
+        Run an output ruleset
+        :param rules: the rules to run
+        :return: True if successful, False otherwise
+        """
         for rule in rules:
             # load the ruleset
             if rule not in self.config.output_rules:
@@ -36,14 +42,30 @@ class TemplateBuilder:
                 # write the output to the output file
                 with open(output_file, "w") as out_file:
                     out_file.write(template)
-                    return True
             except EnvironmentError:
                 self.logger.error('Cannot write output to {0}'.format(output_file))
                 # try to delete the file
                 os.remove(output_file)
                 return False
 
+            # run any remaining shell scripts
+            if len(ruleset) > 2:
+                counter = 0
+                for shell_script in ruleset:
+                    if counter < 2:
+                        counter += 1
+                    else:
+                        self.logger.debug("Calling shell script {0}".format(shell_script))
+                        subprocess.call(shell_script, shell=True)
+            return True
+
     def _eprint_substitute(self, section, rule):
+        """
+        Substitute in a section from the repository
+        :param section: the section
+        :param rule: the rule
+        :return: the output for a section
+        """
         # load up the templates for this section
         self.logger.debug("Loading sub-templates for {0} {1}".format(rule, section))
         section_template = self.config.section_template[rule]

@@ -83,7 +83,8 @@ output_rules = {'html': ['templates/CV',
                 'pdf': ['templates/PDF',
                         'output/Eve-CV-PDF.html',
                         'screen -S serve -d -m bash -c "python3 -m http.server"',
-                        'google-chrome --headless --disable-gpu --print-to-pdf=./output/Eve-CV.pdf --virtual-time-budget=50000000 --run-all-compositor-stages-before-draw --disable-web-security http://127.0.0.1:8000/out.html',
+                        'sleep 2',
+                        'google-chrome --headless --disable-gpu --print-to-pdf=./output/Eve-CV.pdf --virtual-time-budget=50000000 --run-all-compositor-stages-before-draw --disable-web-security http://127.0.0.1:8000/output/Eve-CV-PDF.html',
                         'screen -S serve -X quit',
                         'rm output/Eve-CV-PDF.html']}
 

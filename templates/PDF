@@ -5,11 +5,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Martin Paul Eve</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="static/pagedJS/css/pagedjs.css">
-  <link rel="stylesheet" href="static/pagedJS/css/cv.css">
+  <link rel="stylesheet" href="../static/pagedJS/css/pagedjs.css">
+  <link rel="stylesheet" href="../static/pagedJS/css/cv.css">
   <script src="http://use.typekit.net/ria4wnw.js"></script>
   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-  <script type="text/javascript" src="static/pagedJS/js/pagedjs.js"></script>
+  <script type="text/javascript" src="../static/pagedJS/js/pagedjs.js"></script>
 </head>
 
 <body>
