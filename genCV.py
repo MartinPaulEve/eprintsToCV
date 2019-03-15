@@ -50,7 +50,7 @@ logger = gogo.Gogo(
 
 
 def main(args):
-    if args['--debug']:
+    if '--debug' in args and args['--debug']:
         logger.setLevel('DEBUG')
     else:
         logger.setLevel('INFO')
