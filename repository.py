@@ -320,8 +320,6 @@ class Repository:
         for input_type in types:
             if input_type not in self.config.storage:
                 errors.append('No storage entry found for type {0}'.format(input_type))
-            if input_type not in self.config.section_headings:
-                errors.append('No section heading found for type {0}'.format(input_type))
             if input_type not in self.config.peer_reviewed:
                 errors.append('No peer review setting found for type {0}'.format(input_type))
             if input_type not in self.config.editorial:
