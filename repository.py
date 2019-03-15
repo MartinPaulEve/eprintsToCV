@@ -65,7 +65,7 @@ class Repository:
         """
 
         # determine whether to refresh the JSON
-        if not os.path.isfile(self.config.storage["json"]) and not refresh:
+        if not os.path.isfile(self.config.storage["json"]) or refresh:
             self.logger.debug("Attempting to refresh {0}".format(self.url))
 
             try:
