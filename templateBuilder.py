@@ -144,6 +144,14 @@ class TemplateBuilder:
 
         return line
 
+    def _creators_formatter(self, creator):
+        return str.format('{0}, {1}', creator[self.config.creator_field_top_level][self.config.creator_field_last_name],
+                          creator[self.config.creator_field_top_level][self.config.creator_field_given_name])
+
+    def _editors_formatter(self, editor):
+        return str.format('{0}, {1}', editor[self.config.editor_field_top_level][self.config.editor_field_last_name],
+                          editor[self.config.editor_field_top_level][self.config.editor_field_given_name])
+
     def _build_creators(self, item, rule):
         """
         Builds a list of creators, editors, dates and titles for an item
@@ -152,22 +160,21 @@ class TemplateBuilder:
         """
         creators = ""
         editors = ""
-        if 'creators' in item:
-            for creator in item['creators'][:-1]:
+
+        if self.config.creators_item_name in item:
+            for creator in item[self.config.creators_item_name][:-1]:
                 if creators != "":
                     creators += "; "
 
-                creators += str.format('{0}, {1}', creator['name']['family'], creator['name']['given'])
+                creators += self._creators_formatter(creator)
 
             if creators != "":
                 creators += "; and "
 
-            creator = item['creators'][-1]
+            creators += self._creators_formatter(item[self.config.creators_item_name][-1])
 
-            creators += str.format('{0}, {1}', creator['name']['family'], creator['name']['given'])
-
-        if 'editors' in item:
-            for editor in item['editors'][:-1]:
+        if self.config.editors_item_name in item:
+            for editor in item[self.config.editors_item_name][:-1]:
                 if editors == "" and creators == "":
                     editors = "; ed. by "
                 elif editors == "":
@@ -175,7 +182,7 @@ class TemplateBuilder:
                 if editors != "; ed. by " and editors != "; ed. by ":
                     editors += "; "
 
-                editors += str.format('{0}, {1}', editor['name']['family'], editor['name']['given'])
+                editors += self._editors_formatter(editor)
 
             if editors == "" and creators == "":
                 editors = "; ed. by "
@@ -184,9 +191,7 @@ class TemplateBuilder:
             if editors != "; ed. by " and editors != "; ed. by ":
                 editors += "; "
 
-            editor = item['editors'][-1]
-
-            editors += str.format('{0}, {1}', editor['name']['family'], editor['name']['given'])
+            editors += self._editors_formatter(item[self.config.editors_item_name][-1])
 
         try:
             the_date = datetime.strptime(item['date'][0:4], "%Y").year

@@ -172,3 +172,14 @@ exclude_venues = {'pdf': {
     'html': {
         'other_articles': 'martineve.com',
     }}
+
+# specify the names of the special fields
+creators_item_name = 'creators'
+creator_field_top_level = 'name'
+creator_field_given_name = 'given'
+creator_field_last_name = 'family'
+
+editors_item_name = 'editors'
+editor_field_top_level = 'name'
+editor_field_given_name = 'given'
+editor_field_last_name = 'family'
