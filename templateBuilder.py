@@ -81,22 +81,38 @@ class TemplateBuilder:
 
         output = ''
 
+        exclude_items = self.config.exclude_venues
+
+        item_count = len(section_items)
+
+        if rule in exclude_items and section in exclude_items[rule]:
+            exclude_venues = exclude_items[rule][section].split(',')
+        else:
+            exclude_venues = []
+
         for item in section_items:
-            creators, editors, the_date, volume, oa_status, item = self._build_creators(item, rule)
-
-            if current_date != the_date:
-                line = self._substitute_item_template(item_templates_new_date, the_date, creators, editors, volume,
-                                                      oa_status, item)
-                current_date = the_date
+            if 'publication' in item and item['publication'] in exclude_venues:
+                item_count -= 1
             else:
-                line = self._substitute_item_template(item_templates, the_date, creators, editors, volume,
-                                                      oa_status, item)
 
-            output += line
+                creators, editors, the_date, volume, oa_status, item = self._build_creators(item, rule)
 
-        header_output = header_template.format(self.config.section_headings[rule][section], len(section_items))
+                if current_date != the_date:
+                    line = self._substitute_item_template(item_templates_new_date, the_date, creators, editors, volume,
+                                                          oa_status, item)
+                    current_date = the_date
+                else:
+                    line = self._substitute_item_template(item_templates, the_date, creators, editors, volume,
+                                                          oa_status, item)
 
-        section_output = section_template.format(section, header_output + output)
+                output += line
+
+        if item_count > 0:
+            header_output = header_template.format(self.config.section_headings[rule][section], item_count)
+
+            section_output = section_template.format(section, header_output + output)
+        else:
+            section_output = ''
 
         return section_output
 

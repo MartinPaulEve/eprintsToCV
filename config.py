@@ -164,3 +164,11 @@ oa_status = {'html': ' [<a href="[[oa_uri]]" style="color:[[oa_color]]">Download
 # basic OA nonavailability
 non_oa_status = {'html': ' [<a href="mailto:[[email]]?subject=Request to read [[title]]">Request to read</a>]'}
 
+# list of venues to exclude from a list
+exclude_venues = {'pdf': {
+    'other_articles': 'martineve.com',
+    },
+
+    'html': {
+        'other_articles': 'martineve.com',
+    }}
