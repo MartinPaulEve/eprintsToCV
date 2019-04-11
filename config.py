@@ -159,7 +159,8 @@ item_templates_new_date = {'pdf': {
 email = "martin.eve@bbk.ac.uk"
 
 # basic OA availability
-oa_status = {'html': ' [<a href="[[oa_uri]]" style="color:[[oa_color]]">Download [[doc]]</a>]'}
+# note: [[doc]] will insert a space if required
+oa_status = {'html': ' [<a href="[[oa_uri]]" style="color:[[oa_color]]">Download[[doc]]</a>]'}
 
 # basic OA nonavailability
 non_oa_status = {'html': ' [<a href="mailto:[[email]]?subject=Request to read [[title]]">Request to read</a>]'}

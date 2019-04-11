@@ -237,7 +237,7 @@ class TemplateBuilder:
                                     oa_status = oa_status.replace('[[oa_uri]]',
                                                                   doc["uri"]).replace('[[oa_color]]',
                                                                                       oa_color).replace(
-                                        '[[doc]]', doc["formatdesc"])
+                                        '[[doc]]', ' {0}'.format(doc["formatdesc"]))
                                 else:
                                     oa_status = oa_status.replace('[[oa_uri]]',
                                                                   doc["uri"]).replace('[[oa_color]]',
