@@ -276,7 +276,7 @@ class TemplateBuilder:
                         content = [line.rstrip('\n') for line in f]
                         substitute = '\n'.join(content)
                 except EnvironmentError:
-                    self.logger.error('Cannot load section from {0}'.format(section_file))
+                    self.logger.error('Cannot load section.')
                     return False
 
             template = section.sub(substitute, template)
