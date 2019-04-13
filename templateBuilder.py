@@ -94,11 +94,12 @@ class TemplateBuilder:
             if 'publication' in item and item['publication'] in exclude_venues:
                 item_count -= 1
             else:
-
-                creators, oa_status, item = self._build_creators(item, rule)
+                # build the template components
+                creators = self._build_creators(item, rule)
                 editors = self._build_editors(item, creators, rule)
                 the_date = self._build_date(item)
                 volume = self._build_volume(item, rule)
+                oa_status = self._build_oa_status(item, rule)
 
                 # replace title quotes
                 self._replace_title_quotes(item)
@@ -252,31 +253,13 @@ class TemplateBuilder:
             if 'oa_status' in item and item['oa_status'] == 'gold' and 'official_url' in item:
                 item['uri'] = item['official_url']
 
-    def _build_creators(self, item, rule):
+    def _build_oa_status(self, item, rule):
         """
-        Builds a list of creators, editors, dates and titles for an item
+        Builds an open access status for an item
         :param item: The item on which to work
         :param rule: The rule on which to operate
-        :return: a tuple of: creators (string), editors (string), dates, and titles
+        :return: a string of the OA status of the item
         """
-        creators = ""
-
-        if self.config.creators_item_name in item:
-            for creator in item[self.config.creators_item_name][:-1]:
-                if creators != "":
-                    creators += self.config.creators_delimiter[rule]
-
-                creators += self._creators_formatter(creator)
-
-            if creators != "":
-                creators += self.config.creators_terminal_delimiter[rule]
-
-            creators += self._creators_formatter(item[self.config.creators_item_name][-1])
-
-
-
-
-
         oa_status = ""
 
         if rule in self.config.oa_status:
@@ -313,10 +296,32 @@ class TemplateBuilder:
                         oa_status = non_oa_status.replace('[[email]]', self.config.email).replace('[[title]]',
                                                                                                   item['title'])
             else:
-                oa_status = non_oa_status.replace('[[email]]', self.config.email).replace('[[title]]',
-                                                                                          item['title'])
+                oa_status = non_oa_status.replace('[[email]]', self.config.email).replace('[[title]]', item['title'])
 
-        return creators, oa_status, item
+        return oa_status
+
+    def _build_creators(self, item, rule):
+        """
+        Builds a list of creators, editors, dates and titles for an item
+        :param item: The item on which to work
+        :param rule: The rule on which to operate
+        :return: a string of creators
+        """
+        creators = ""
+
+        if self.config.creators_item_name in item:
+            for creator in item[self.config.creators_item_name][:-1]:
+                if creators != "":
+                    creators += self.config.creators_delimiter[rule]
+
+                creators += self._creators_formatter(creator)
+
+            if creators != "":
+                creators += self.config.creators_terminal_delimiter[rule]
+
+            creators += self._creators_formatter(item[self.config.creators_item_name][-1])
+
+        return creators
 
     def _substitute_template(self, template, rule):
         """
