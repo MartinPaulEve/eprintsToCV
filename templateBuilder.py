@@ -103,6 +103,9 @@ class TemplateBuilder:
                 # replace title quotes
                 self._replace_title_quotes(item)
 
+                # replace URLs
+                self._link_to_official_url_if_gold_oa(item, rule)
+
                 if current_date != the_date:
                     line = self._substitute_item_template(item_templates_new_date, the_date, creators, editors, volume,
                                                           oa_status, item)
@@ -238,6 +241,17 @@ class TemplateBuilder:
 
         return volume
 
+    def _link_to_official_url_if_gold_oa(self, item, rule):
+        """
+        If setting is enabled, change the link to the official URL if it's open access
+        :param item: The item on which to work
+        :param rule: The rule on which to operate
+        :return: nothing
+        """
+        if self.config.gold_oa_direct_link[rule]:
+            if 'oa_status' in item and item['oa_status'] == 'gold' and 'official_url' in item:
+                item['uri'] = item['official_url']
+
     def _build_creators(self, item, rule):
         """
         Builds a list of creators, editors, dates and titles for an item
@@ -259,8 +273,7 @@ class TemplateBuilder:
 
             creators += self._creators_formatter(item[self.config.creators_item_name][-1])
 
-        if 'oa_status' in item and item['oa_status'] == 'gold' and 'official_url' in item:
-            item['uri'] = item['official_url']
+
 
 
 

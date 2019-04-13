@@ -185,6 +185,10 @@ volume_template = {'pdf': ' [[volume]][[number]]',
 # number in brackets
 number_in_brackets = True
 
+# whether to replace repository links to gold OA titles with the official URL
+gold_oa_direct_link = {'pdf': True,
+                       'html': True}
+
 # the email address for OA status display
 email = "martin.eve@bbk.ac.uk"
 
