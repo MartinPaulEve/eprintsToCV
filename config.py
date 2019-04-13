@@ -155,6 +155,26 @@ item_templates_new_date = {'pdf': {
         'conference_items': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[creators]], &ldquo;<a href="[[uri]]">[[title]]</a>&rdquo;, <i>[[event_title]]</i>, [[event_location]], [[year]]  [[oa_status]]</span></p>'}
 }
 
+# the delimiter between creators
+creators_delimiter = {'pdf': '; ',
+                      'html': '; '}
+
+# the delimiter between editors
+editors_delimiter = {'pdf': '; ',
+                     'html': '; '}
+
+# the terminal delimiter between creators
+creators_terminal_delimiter = {'pdf': '; and ',
+                               'html': '; and '}
+
+# the terminal delimiter between editors
+editors_terminal_delimiter = {'pdf': '; and ',
+                              'html': '; and '}
+
+# the prefix for editors after a creators string
+editors_prefix = {'pdf': "; ed. by ",
+                  'html': "; ed. by "}
+
 # the email address for OA status display
 email = "martin.eve@bbk.ac.uk"
 
