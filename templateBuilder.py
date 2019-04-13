@@ -209,9 +209,9 @@ class TemplateBuilder:
         # build the volume/number format
         volume = ""
 
-        if 'volume' in item and not 'number' in item:
+        if 'volume' in item and 'number' not in item:
             volume = ' ({0})'.format(str(item['volume']))
-        elif 'number' in item and not 'volume' in item:
+        elif 'number' in item and 'volume' not in item:
             volume = ' {0}'.format(str(item['number']))
         elif 'number' in item and 'volume' in item:
             volume = ' {0}({1})'.format(str(item['volume']), str(item['number']))
@@ -246,7 +246,7 @@ class TemplateBuilder:
                         else:
                             oa_status = oa_status.replace('[[oa_uri]]',
                                                           item["documents"][0]["uri"]).replace('[[oa_color]]',
-                                                                              oa_color).replace(
+                                                                                               oa_color).replace(
                                 '[[doc]]', '')
                     else:
                         oa_status = non_oa_status.replace('[[email]]', self.config.email).replace('[[title]]',
