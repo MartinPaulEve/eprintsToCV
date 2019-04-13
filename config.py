@@ -178,6 +178,13 @@ editors_prefix = {'pdf': "; ed. by ",
 # whether outer quotes are single or double
 outer_quotes_single = False
 
+# the template for volume formatting
+volume_template = {'pdf': ' [[volume]][[number]]',
+                   'html': ' [[volume]][[number]]'}
+
+# number in brackets
+number_in_brackets = True
+
 # the email address for OA status display
 email = "martin.eve@bbk.ac.uk"
 

@@ -95,9 +95,10 @@ class TemplateBuilder:
                 item_count -= 1
             else:
 
-                creators, volume, oa_status, item = self._build_creators(item, rule)
+                creators, oa_status, item = self._build_creators(item, rule)
                 editors = self._build_editors(item, creators, rule)
                 the_date = self._build_date(item)
+                volume = self._build_volume(item, rule)
 
                 # replace title quotes
                 self._replace_title_quotes(item)
@@ -204,13 +205,38 @@ class TemplateBuilder:
 
     def _replace_title_quotes(self, item):
         if self.config.outer_quotes_single:
-            # do nothing
+            # do nothing as it's hard to detect possessive apostrophes
             pass
         else:
             # replace double quotation marks with singles
             item['title'] = item['title'].replace('"', '\'')
             item['title'] = item['title'].replace('“', '‘')
             item['title'] = item['title'].replace('”', '’')
+
+    def _build_volume(self, item, rule):
+        """
+        Builds a volume and issue string
+        :param item: The item on which to work
+        :param rule: The rule on which to operate
+        :return: a tuple of: creators (string), editors (string), dates, and titles
+        """
+        # build the volume/number format
+        volume = self.config.volume_template[rule]
+
+        if 'volume' in item:
+            volume = volume.replace('[[volume]]', str(item['volume']))
+        else:
+            volume = volume.replace('[[volume]]', '')
+
+        if 'number' in item:
+            if self.config.number_in_brackets:
+                volume = volume.replace('[[number]]', '({0})'.format(str(item['number'])))
+            else:
+                volume = volume.replace('[[number]]', str(item['number']))
+        else:
+            volume = volume.replace('[[number]]', '')
+
+        return volume
 
     def _build_creators(self, item, rule):
         """
@@ -236,15 +262,7 @@ class TemplateBuilder:
         if 'oa_status' in item and item['oa_status'] == 'gold' and 'official_url' in item:
             item['uri'] = item['official_url']
 
-        # build the volume/number format
-        volume = ""
 
-        if 'volume' in item and 'number' not in item:
-            volume = ' ({0})'.format(str(item['volume']))
-        elif 'number' in item and 'volume' not in item:
-            volume = ' {0}'.format(str(item['number']))
-        elif 'number' in item and 'volume' in item:
-            volume = ' {0}({1})'.format(str(item['volume']), str(item['number']))
 
         oa_status = ""
 
@@ -285,7 +303,7 @@ class TemplateBuilder:
                 oa_status = non_oa_status.replace('[[email]]', self.config.email).replace('[[title]]',
                                                                                           item['title'])
 
-        return creators, volume, oa_status, item
+        return creators, oa_status, item
 
     def _substitute_template(self, template, rule):
         """
