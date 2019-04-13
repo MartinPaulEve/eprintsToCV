@@ -95,8 +95,9 @@ class TemplateBuilder:
                 item_count -= 1
             else:
 
-                creators, the_date, volume, oa_status, item = self._build_creators(item, rule)
+                creators, volume, oa_status, item = self._build_creators(item, rule)
                 editors = self._build_editors(item, creators, rule)
+                the_date = self._build_date(item)
 
                 if current_date != the_date:
                     line = self._substitute_item_template(item_templates_new_date, the_date, creators, editors, volume,
@@ -185,6 +186,19 @@ class TemplateBuilder:
 
         return editors
 
+    def _build_date(self, item):
+        """
+        Builds a date for an item
+        :param item: The item on which to work
+        :return: a formatted date
+        """
+        try:
+            the_date = datetime.strptime(item['date'][0:4], "%Y").year
+        except:
+            the_date = "n.d."
+
+        return the_date
+
     def _build_creators(self, item, rule):
         """
         Builds a list of creators, editors, dates and titles for an item
@@ -205,11 +219,6 @@ class TemplateBuilder:
                 creators += self.config.creators_terminal_delimiter[rule]
 
             creators += self._creators_formatter(item[self.config.creators_item_name][-1])
-
-        try:
-            the_date = datetime.strptime(item['date'][0:4], "%Y").year
-        except:
-            the_date = "n.d."
 
         if 'oa_status' in item and item['oa_status'] == 'gold' and 'official_url' in item:
             item['uri'] = item['official_url']
@@ -268,7 +277,7 @@ class TemplateBuilder:
                 oa_status = non_oa_status.replace('[[email]]', self.config.email).replace('[[title]]',
                                                                                           item['title'])
 
-        return creators, the_date, volume, oa_status, item
+        return creators, volume, oa_status, item
 
     def _substitute_template(self, template, rule):
         """
