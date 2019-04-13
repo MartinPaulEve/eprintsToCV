@@ -95,7 +95,8 @@ class TemplateBuilder:
                 item_count -= 1
             else:
 
-                creators, editors, the_date, volume, oa_status, item = self._build_creators(item, rule)
+                creators, the_date, volume, oa_status, item = self._build_creators(item, rule)
+                editors = self._build_editors(item, creators, rule)
 
                 if current_date != the_date:
                     line = self._substitute_item_template(item_templates_new_date, the_date, creators, editors, volume,
@@ -149,49 +150,61 @@ class TemplateBuilder:
                           creator[self.config.creator_field_top_level][self.config.creator_field_given_name])
 
     def _editors_formatter(self, editor):
-        return str.format('{0}, {1}', editor[self.config.editor_field_top_level][self.config.editor_field_last_name],
+        return str.format('{1} {0}', editor[self.config.editor_field_top_level][self.config.editor_field_last_name],
                           editor[self.config.editor_field_top_level][self.config.editor_field_given_name])
+
+    def _build_editors(self, item, creators, rule):
+        """
+        Builds a list of editors for an item
+        :param item: The item on which to work
+        :param creators: The current string of creators
+        :param rule: The current rule
+        :return: a string of editors
+        """
+        editors = ""
+
+        if self.config.editors_item_name in item:
+            for editor in item[self.config.editors_item_name][:-1]:
+                if editors == "" and creators == "":
+                    editors = self.config.editors_prefix[rule]
+                elif editors == "":
+                    editors = self.config.editors_prefix[rule]
+                if editors != self.config.editors_prefix[rule]:
+                    editors += self.config.editors_delimiter[rule]
+
+                editors += self._editors_formatter(editor)
+
+            if editors == "" and creators == "":
+                editors = self.config.editors_prefix[rule]
+            elif editors == "":
+                editors = self.config.editors_prefix[rule]
+            if editors != self.config.editors_prefix[rule]:
+                editors += self.config.editors_terminal_delimiter[rule]
+
+            editors += self._editors_formatter(item[self.config.editors_item_name][-1])
+
+        return editors
 
     def _build_creators(self, item, rule):
         """
         Builds a list of creators, editors, dates and titles for an item
         :param item: The item on which to work
+        :param rule: The rule on which to operate
         :return: a tuple of: creators (string), editors (string), dates, and titles
         """
         creators = ""
-        editors = ""
 
         if self.config.creators_item_name in item:
             for creator in item[self.config.creators_item_name][:-1]:
                 if creators != "":
-                    creators += "; "
+                    creators += self.config.creators_delimiter[rule]
 
                 creators += self._creators_formatter(creator)
 
             if creators != "":
-                creators += "; and "
+                creators += self.config.creators_terminal_delimiter[rule]
 
             creators += self._creators_formatter(item[self.config.creators_item_name][-1])
-
-        if self.config.editors_item_name in item:
-            for editor in item[self.config.editors_item_name][:-1]:
-                if editors == "" and creators == "":
-                    editors = "; ed. by "
-                elif editors == "":
-                    editors = "; ed. by "
-                if editors != "; ed. by " and editors != "; ed. by ":
-                    editors += "; "
-
-                editors += self._editors_formatter(editor)
-
-            if editors == "" and creators == "":
-                editors = "; ed. by "
-            elif editors == "":
-                editors = "; ed. by "
-            if editors != "; ed. by " and editors != "; ed. by ":
-                editors += "; "
-
-            editors += self._editors_formatter(item[self.config.editors_item_name][-1])
 
         try:
             the_date = datetime.strptime(item['date'][0:4], "%Y").year
@@ -255,7 +268,7 @@ class TemplateBuilder:
                 oa_status = non_oa_status.replace('[[email]]', self.config.email).replace('[[title]]',
                                                                                           item['title'])
 
-        return creators, editors, the_date, volume, oa_status, item
+        return creators, the_date, volume, oa_status, item
 
     def _substitute_template(self, template, rule):
         """
