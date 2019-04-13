@@ -208,6 +208,11 @@ exclude_venues = {'pdf': {
         'other_articles': 'martineve.com',
     }}
 
+italicize_titles = ['Cloud Atlas', 'Abortion Eve', 'I’m Jack', 'Station Eleven', '2666', 'Point Omega',
+                    'Affinity', 'C', 'Saint Antony in His Desert', 'Enumerations: Data and Literary Study',
+                    'Making Literature Now', 'Mere Reading: The Poetics of Wonder in Modern American Novels',
+                    'Anti-Book: On the Art and Politics of Radical Publishing']
+
 # specify the names of the special fields
 creators_item_name = 'creators'
 creator_field_top_level = 'name'

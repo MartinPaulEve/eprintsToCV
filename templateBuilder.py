@@ -107,6 +107,9 @@ class TemplateBuilder:
                 # replace URLs
                 self._link_to_official_url_if_gold_oa(item, rule)
 
+                # italicize title
+                self._italicize_titles(item)
+
                 if current_date != the_date:
                     line = self._substitute_item_template(item_templates_new_date, the_date, creators, editors, volume,
                                                           oa_status, item)
@@ -193,6 +196,15 @@ class TemplateBuilder:
             editors += self._editors_formatter(item[self.config.editors_item_name][-1])
 
         return editors
+
+    def _italicize_titles(self, item):
+        """
+        Italicizes titles
+        :param item: The item on which to work
+        :return: nothing
+        """
+        for italic in self.config.italicize_titles:
+            item['title'] = re.sub(r'(\W|^)({0})(\W|$)'.format(italic), r'<i>\1\2\3</i>', item['title'])
 
     def _build_date(self, item):
         """
