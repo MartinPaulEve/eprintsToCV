@@ -175,6 +175,9 @@ editors_terminal_delimiter = {'pdf': '; and ',
 editors_prefix = {'pdf': "; ed. by ",
                   'html': "; ed. by "}
 
+# whether outer quotes are single or double
+outer_quotes_single = False
+
 # the email address for OA status display
 email = "martin.eve@bbk.ac.uk"
 

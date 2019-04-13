@@ -99,6 +99,9 @@ class TemplateBuilder:
                 editors = self._build_editors(item, creators, rule)
                 the_date = self._build_date(item)
 
+                # replace title quotes
+                self._replace_title_quotes(item)
+
                 if current_date != the_date:
                     line = self._substitute_item_template(item_templates_new_date, the_date, creators, editors, volume,
                                                           oa_status, item)
@@ -199,6 +202,16 @@ class TemplateBuilder:
 
         return the_date
 
+    def _replace_title_quotes(self, item):
+        if self.config.outer_quotes_single:
+            # do nothing
+            pass
+        else:
+            # replace double quotation marks with singles
+            item['title'] = item['title'].replace('"', '\'')
+            item['title'] = item['title'].replace('“', '‘')
+            item['title'] = item['title'].replace('”', '’')
+
     def _build_creators(self, item, rule):
         """
         Builds a list of creators, editors, dates and titles for an item
@@ -222,11 +235,6 @@ class TemplateBuilder:
 
         if 'oa_status' in item and item['oa_status'] == 'gold' and 'official_url' in item:
             item['uri'] = item['official_url']
-
-        # replace double quotation marks with singles
-        item['title'] = item['title'].replace('"', '\'')
-        item['title'] = item['title'].replace('“', '‘')
-        item['title'] = item['title'].replace('”', '’')
 
         # build the volume/number format
         volume = ""
