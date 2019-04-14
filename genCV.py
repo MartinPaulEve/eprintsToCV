@@ -31,6 +31,8 @@ These can be extended using the configuration mapping system.
 
 The tool includes two output options by default, "html" and "pdf".
 """
+import sys
+
 from docopt import docopt
 import logging
 import pygogo as gogo
@@ -79,8 +81,6 @@ def main(args):
             else:
                 template_builder = TemplateBuilder(repo, config, logger)
                 template_builder.build(args['OUTPUT_TYPES'])
-    except:
-        logger.error("An uncaught error was thrown.")
     finally:
         # always try to shutdown the citeproc server
         if '--citeproc' in args and args['--citeproc']:

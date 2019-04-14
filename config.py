@@ -282,3 +282,69 @@ other_editors_surname_first = {'pdf': False,
 
 # experimental citeproc support
 citeproc_js_server_directory = '/home/Mounts/SIXTB/Documents/Programming/citeproc-js-server'
+
+# define the item templates in citeproc mode
+citeproc_item_templates = {'pdf': {
+    'all_books': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>',
+    'unedited_books': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>',
+    'edited_books': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>',
+    'all_peer_reviewed_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>',
+    'peer_reviewed_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>',
+    'other_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>',
+    'reviews': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>',
+    'book_chapters': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>',
+    'conference_items': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>'},
+
+    'html': {
+        'all_books': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>',
+        'unedited_books': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>',
+        'edited_books': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>',
+        'all_peer_reviewed_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>',
+        'peer_reviewed_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>',
+        'other_articles': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>',
+        'reviews': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>',
+        'book_chapters': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>',
+        'conference_items': '<p class="anitem genericitem"><span class="prefix">&nbsp;</span><span class="bibitem">[[citeproc]]</span></p>'}
+}
+
+# define the item templates for new date lines in citeproc mode
+citeproc_item_templates_new_date = {'pdf': {
+    'all_books': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>',
+    'unedited_books': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>',
+    'edited_books': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>',
+    'all_peer_reviewed_articles': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>',
+    'peer_reviewed_articles': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>',
+    'other_articles': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>',
+    'reviews': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>',
+    'book_chapters': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>',
+    'conference_items': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>'},
+
+    'html': {
+        'all_books': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>',
+        'unedited_books': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>',
+        'edited_books': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>',
+        'all_peer_reviewed_articles': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>',
+        'peer_reviewed_articles': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>',
+        'other_articles': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>',
+        'reviews': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>',
+        'book_chapters': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>',
+        'conference_items': '<p class="anitemnewdate genericitem"><span class="prefix bold">[[year]]</span><span class="bibitem">[[citeproc]]</span></p>'}
+}
+
+# this determines the underlying database type in eprints
+citeproc_type_mapper = {'all_books': "book",
+                        'unedited_books': "book",
+                        'edited_books': "book",
+                        'all_peer_reviewed_articles': "article-journal",
+                        'peer_reviewed_articles': "article-journal",
+                        'other_articles': "article-journal",
+                        'reviews': "article-journal",
+                        'book_chapters': "chapter",
+                        'conference_items': "paper-conference"}
+
+# the citeproc style to use
+citeproc_style = {'pdf': 'modern-humanities-research-association',
+                  'html': 'modern-language-association'}
+
+# the fire-up address of the citeproc server
+citeproc_server = 'http://127.0.0.1:8085'

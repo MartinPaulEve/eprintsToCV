@@ -233,7 +233,7 @@ class TemplateBuilder:
                     editors += self.config.editors_terminal_delimiter_two[rule]
 
             editors += self._person_formatter(item[self.config.editors_item_name][-1], is_primary, rule,
-                                              self.config.creator_field_top_level,
+                                              self.config.editor_field_top_level,
                                               self.config.editor_field_given_name,
                                               self.config.editor_field_last_name,
                                               self.config.primary_editor_surname_first,
