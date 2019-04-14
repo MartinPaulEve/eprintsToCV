@@ -3,10 +3,12 @@ from datetime import datetime
 
 
 class CiteProc:
-    def __init__(self, config, logger):
+    def __init__(self, repo, config, logger):
         self.config = config
         self.logger = logger
+        self.repository = repo
 
+        # start the citeproc server
         self.init_commands = ['screen -S serve_npm -d -m bash -c "npm start"',
                               'sleep 2']
 
@@ -22,3 +24,6 @@ class CiteProc:
             subprocess.call(shell_script, shell=True)
 
         self.logger.info('Shutdown citeproc-js-server')
+
+    def build(self, rules):
+        pass

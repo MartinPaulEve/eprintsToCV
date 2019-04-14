@@ -65,9 +65,6 @@ def main(args):
 
     try:
         # start the citeproc server if the flag is passed
-        if '--citeproc' in args and args['--citeproc']:
-            citeproc = CiteProc(config, logger)
-
         if 'fetch' in args and args['fetch']:
             if len(args['TYPES']) > 0:
                 repo.fetch(args['TYPES'])
@@ -75,8 +72,13 @@ def main(args):
                 repo.fetch(config.default_types)
 
         elif 'make' in args and args['make']:
-            template_builder = TemplateBuilder(repo, config, logger)
-            template_builder.build(args['OUTPUT_TYPES'])
+
+            if '--citeproc' in args and args['--citeproc']:
+                citeproc = CiteProc(repo, config, logger)
+                citeproc.build(args['OUTPUT_TYPES'])
+            else:
+                template_builder = TemplateBuilder(repo, config, logger)
+                template_builder.build(args['OUTPUT_TYPES'])
     except:
         logger.error("An uncaught error was thrown.")
     finally:
