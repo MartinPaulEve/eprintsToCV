@@ -279,9 +279,6 @@ class CiteProc:
                 # italicize title
                 self._italicize_titles(item, rule)
 
-                # setup official links for gold OA
-                self._link_to_official_url_if_gold_oa(item, rule)
-
                 # build the oa_status
                 oa_status = self._build_oa_status(item, rule)
 
@@ -293,67 +290,32 @@ class CiteProc:
                 items[identifier]['id'] = identifier
                 items[identifier]['title'] = item['title']
 
-                # build the authors list
-                if self.config.creators_item_name in item and len(item[self.config.creators_item_name]) > 0:
-                    items[identifier]['author'] = []
+                # build creators
+                self._build_creators(identifier, item, items)
 
-                    for creator in item[self.config.creators_item_name]:
-                        creator_dict = {
-                            'family': creator[self.config.creator_field_top_level][self.config.creator_field_last_name],
-                            'given': creator[self.config.creator_field_top_level][self.config.creator_field_given_name]}
-
-                        items[identifier]['author'].append(creator_dict)
-
-                # build the editors list
-                if self.config.editors_item_name in item and len(item[self.config.editors_item_name]) > 0:
-                    items[identifier]['editor'] = []
-
-                    for editor in item[self.config.editors_item_name]:
-                        editor_dict = {
-                            'family': editor[self.config.editor_field_top_level][self.config.editor_field_last_name],
-                            'given': editor[self.config.editor_field_top_level][self.config.editor_field_given_name]}
-
-                        items[identifier]['editor'].append(editor_dict)
+                # build editors
+                self._build_editors(identifier, item, items)
 
                 # the item type
                 items[identifier]['type'] = self.config.citeproc_type_mapper[section]
 
-                # publisher
-                if 'publisher' in item:
-                    items[identifier]['publisher'] = item['publisher']
-
-                # place of publication
-                if 'place_of_pub' in item:
-                    items[identifier]['publisher-place'] = item['place_of_pub']
+                # publisher and place of publication
+                self._build_publisher(identifier, item, items)
 
                 # date
                 items[identifier]['issued'] = {'date-parts': [[the_date]]}
 
                 # container
-                if 'publication' in item:
-                    items[identifier]['container-title'] = item['publication']
+                self._build_container(identifier, item, items)
 
                 # volume and issue
-                if 'volume' in item:
-                    items[identifier]['volume'] = item['volume']
-
-                if 'number' in item:
-                    try:
-                        items[identifier]['issue'] = int(item['number'])
-                    except ValueError:
-                        items[identifier]['issue'] = item['number']
+                self._build_volume(identifier, item, items)
 
                 # doi
-                if 'doi' in item:
-                    items[identifier]['DOI'] = item['doi']
+                self._build_identifier(identifier, item, items, rule)
 
                 # conference stuff
-                if 'event_title' in item:
-                    items[identifier]['event'] = item['event_title']
-                    items[identifier]['container-title'] = item['event_title']
-
-                if 'event_location' in item:
-                    items[identifier]['event-place'] = item['event_location']
+                self._build_event(identifier, item, items)
 
                 # we have to do this _every_ time sadly because otherwise the CSL substitutes in "---"
                 r = requests.post(
@@ -363,18 +325,9 @@ class CiteProc:
 
                 json_response = r.json()
 
-                if len(json_response['bibliography'][1]) > 0:
-                    if current_date != the_date:
-                        line = self._substitute_item_template(item_templates_new_date,
-                                                              json_response['bibliography'][1][0], the_date,
-                                                              item, oa_status)
-                        current_date = the_date
-                    else:
-                        line = self._substitute_item_template(item_templates,
-                                                              json_response['bibliography'][1][0], the_date,
-                                                              item, oa_status)
-
-                    output_string += line
+                output_string, current_date = self._append_item(current_date, item, item_templates,
+                                                                item_templates_new_date,json_response, oa_status,
+                                                                output_string, the_date)
 
                 output = {}
                 items = {}
@@ -382,11 +335,90 @@ class CiteProc:
 
                 counter += 1
 
+        section_output = self._finalize_section(header_template, item_count, output_string, rule, section,
+                                                section_template)
+
+        return section_output
+
+    def _build_container(self, identifier, item, items):
+        if 'publication' in item:
+            items[identifier]['container-title'] = item['publication']
+
+    def _finalize_section(self, header_template, item_count, output_string, rule, section, section_template):
         if item_count > 0:
             header_output = header_template.format(self.config.section_headings[rule][section], item_count)
 
             section_output = section_template.format(section, header_output + output_string)
         else:
             section_output = ''
-
         return section_output
+
+    def _append_item(self, current_date, item, item_templates, item_templates_new_date, json_response, oa_status,
+                     output_string, the_date):
+        if len(json_response['bibliography'][1]) > 0:
+            if current_date != the_date:
+                line = self._substitute_item_template(item_templates_new_date,
+                                                      json_response['bibliography'][1][0], the_date,
+                                                      item, oa_status)
+                current_date = the_date
+            else:
+                line = self._substitute_item_template(item_templates,
+                                                      json_response['bibliography'][1][0], the_date,
+                                                      item, oa_status)
+
+            output_string += line
+
+        return output_string, current_date
+
+    def _build_identifier(self, identifier, item, items, rule):
+        if 'doi' in item:
+            items[identifier]['DOI'] = item['doi']
+
+        # setup official links for gold OA
+        self._link_to_official_url_if_gold_oa(item, rule)
+
+    def _build_publisher(self, identifier, item, items):
+        if 'publisher' in item:
+            items[identifier]['publisher'] = item['publisher']
+        if 'place_of_pub' in item:
+            items[identifier]['publisher-place'] = item['place_of_pub']
+
+    def _build_event(self, identifier, item, items):
+        if 'event_title' in item:
+            items[identifier]['event'] = item['event_title']
+            items[identifier]['container-title'] = item['event_title']
+        if 'event_location' in item:
+            items[identifier]['event-place'] = item['event_location']
+
+    def _build_volume(self, identifier, item, items):
+        if 'volume' in item:
+            items[identifier]['volume'] = item['volume']
+        if 'number' in item:
+            try:
+                items[identifier]['issue'] = int(item['number'])
+            except ValueError:
+                items[identifier]['issue'] = item['number']
+
+    def _build_editors(self, identifier, item, items):
+        # build the editors list
+        if self.config.editors_item_name in item and len(item[self.config.editors_item_name]) > 0:
+            items[identifier]['editor'] = []
+
+            for editor in item[self.config.editors_item_name]:
+                editor_dict = {
+                    'family': editor[self.config.editor_field_top_level][self.config.editor_field_last_name],
+                    'given': editor[self.config.editor_field_top_level][self.config.editor_field_given_name]}
+
+                items[identifier]['editor'].append(editor_dict)
+
+    def _build_creators(self, identifier, item, items):
+        # build the authors list
+        if self.config.creators_item_name in item and len(item[self.config.creators_item_name]) > 0:
+            items[identifier]['author'] = []
+
+            for creator in item[self.config.creators_item_name]:
+                creator_dict = {
+                    'family': creator[self.config.creator_field_top_level][self.config.creator_field_last_name],
+                    'given': creator[self.config.creator_field_top_level][self.config.creator_field_given_name]}
+
+                items[identifier]['author'].append(creator_dict)

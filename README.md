@@ -36,5 +36,5 @@ These can be extended using the configuration mapping system.
 
 The tool includes two output options by default, "html" and "pdf".
 
-This tool requires a working copy of [citeproc-js-server](https://github.com/zotero/citeproc-js-server) to be installed.
+This tool requires a working copy of citeproc-js-server https://github.com/zotero/citeproc-js-server to be installed.
 ```

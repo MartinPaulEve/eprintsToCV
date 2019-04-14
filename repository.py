@@ -204,7 +204,7 @@ class Repository:
                 # this type allows only non-book-reviews
                 filtered_types.append(potential_type)
 
-        self.logger.debug("Reduced types for {0} to {1}".format(item['title'], filtered_types))
+        self.logger.debug("Reduced types for {0} to {1} [book review filter]".format(item['title'], filtered_types))
         return filtered_types
 
     def _filter_by_editorial(self, item, potential_types):
@@ -230,7 +230,7 @@ class Repository:
                 # this type allows only non-edited items
                 filtered_types.append(potential_type)
 
-        self.logger.debug("Reduced types for {0} to {1}".format(item['title'], filtered_types))
+        self.logger.debug("Reduced types for {0} to {1} [editorial filter]".format(item['title'], filtered_types))
         return filtered_types
 
     def _filter_by_peer_review(self, item, potential_types):
@@ -256,7 +256,7 @@ class Repository:
                 # this type allows only non-peer-reviewed items
                 filtered_types.append(potential_type)
 
-        self.logger.debug("Reduced types for {0} to {1}".format(item['title'], filtered_types))
+        self.logger.debug("Reduced types for {0} to {1} [peer review filter]".format(item['title'], filtered_types))
         return filtered_types
 
     def _get_potential_types(self, item):

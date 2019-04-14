@@ -33,7 +33,7 @@ peer_reviewed = {'all_books': "ANY",
                  'peer_reviewed_articles': True,
                  'other_articles': False,
                  'reviews': "ANY",
-                 'book_chapters': True,
+                 'book_chapters': "ANY",
                  'conference_items': "ANY"}
 
 # this determines the editorial conditions for each input type
@@ -164,7 +164,7 @@ titles_to_italicize = ['Cloud Atlas', 'Abortion Eve', 'I’m Jack', 'Station Ele
                        'The Ferryman', 'The Third Policeman', 'The White Devil', 'The Goat, or Who is Sylvia',
                        'Nice Fish', 'The Man Who Knew Infinity', 'No’s Knife', 'The Alchemist', 'JR',
                        'The Glass Bead Game', 'Pynchon Notes', 'Cow Country', 'Twenty-First-Century Drama',
-                       'A Visit from the Goon Squad', 'Mason & Dixon', 'Against the Day', 'Underworld'
+                       'A Visit from the Goon Squad', 'Mason & Dixon', 'Against the Day', 'Underworld', '1Q84'
                        ]
 
 # specify the names of the special fields
@@ -241,8 +241,8 @@ citeproc_type_mapper = {'all_books': "book",
                         'conference_items': "paper-conference"}
 
 # the citeproc style to use
-citeproc_style = {'pdf': 'modern-language-association',
-                  'html': 'modern-language-association'}
+citeproc_style = {'pdf': 'modern-humanities-research-association',
+                  'html': 'modern-humanities-research-association'}
 
 # the fire-up address of the citeproc server
 citeproc_server = 'http://127.0.0.1:8085'

@@ -63,7 +63,7 @@ def main(args):
 
     repo = Repository(config, logger, args['--refresh'])
 
-    citeproc = None
+    citeproc = CiteProc(repo, config, logger)
 
     try:
         # start the citeproc server if the flag is passed
@@ -74,7 +74,6 @@ def main(args):
                 repo.fetch(config.default_types)
 
         elif 'make' in args and args['make']:
-            citeproc = CiteProc(repo, config, logger)
             citeproc.build(args['OUTPUT_TYPES'])
     finally:
         # always try to shutdown the citeproc server
