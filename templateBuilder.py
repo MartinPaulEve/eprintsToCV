@@ -159,13 +159,40 @@ class TemplateBuilder:
 
         return line
 
-    def _creators_formatter(self, creator):
-        return str.format('{0}, {1}', creator[self.config.creator_field_top_level][self.config.creator_field_last_name],
-                          creator[self.config.creator_field_top_level][self.config.creator_field_given_name])
+    def _person_formatter(self, creator, is_primary, rule, field_top_level, given_name_field, last_name_field,
+                          primary_surname_first_field, other_surname_first_field):
+        """
+        Formats a creator line
+        :param creator: the creator object
+        :param is_primary: whether this is the first creator in the list
+        :param rule: the current rule
+        :return: a formatted creator string
+        """
+        if is_primary:
+            # this is a primary person
+            if primary_surname_first_field[rule]:
+                # render the surname first
+                return str.format('{0}, {1}',
+                                  creator[field_top_level][last_name_field],
+                                  creator[field_top_level][given_name_field])
+            else:
+                # render as a full name
+                return str.format('{1} {0}',
+                                  creator[field_top_level][last_name_field],
+                                  creator[field_top_level][given_name_field])
 
-    def _editors_formatter(self, editor):
-        return str.format('{1} {0}', editor[self.config.editor_field_top_level][self.config.editor_field_last_name],
-                          editor[self.config.editor_field_top_level][self.config.editor_field_given_name])
+        else:
+            # this is a secondary person
+            if other_surname_first_field[rule]:
+                # render the surname first
+                return str.format('{0}, {1}',
+                                  creator[field_top_level][last_name_field],
+                                  creator[field_top_level][given_name_field])
+            else:
+                # render as a full name
+                return str.format('{1} {0}',
+                                  creator[field_top_level][last_name_field],
+                                  creator[field_top_level][given_name_field])
 
     def _build_editors(self, item, creators, rule):
         """
@@ -176,6 +203,7 @@ class TemplateBuilder:
         :return: a string of editors
         """
         editors = ""
+        is_primary = True
 
         if self.config.editors_item_name in item:
             for editor in item[self.config.editors_item_name][:-1]:
@@ -184,18 +212,29 @@ class TemplateBuilder:
                 elif editors == "":
                     editors = self.config.editors_prefix[rule]
                 if editors != self.config.editors_prefix[rule]:
+                    is_primary = False
                     editors += self.config.editors_delimiter[rule]
 
-                editors += self._editors_formatter(editor)
+                editors += self._person_formatter(editor, is_primary, rule, self.config.creator_field_top_level,
+                                                  self.config.editor_field_given_name,
+                                                  self.config.editor_field_last_name,
+                                                  self.config.primary_editor_surname_first,
+                                                  self.config.other_editors_surname_first)
 
             if editors == "" and creators == "":
                 editors = self.config.editors_prefix[rule]
             elif editors == "":
                 editors = self.config.editors_prefix[rule]
             if editors != self.config.editors_prefix[rule]:
+                is_primary = False
                 editors += self.config.editors_terminal_delimiter[rule]
 
-            editors += self._editors_formatter(item[self.config.editors_item_name][-1])
+            editors += self._person_formatter(item[self.config.editors_item_name][-1], is_primary, rule,
+                                              self.config.creator_field_top_level,
+                                              self.config.editor_field_given_name,
+                                              self.config.editor_field_last_name,
+                                              self.config.primary_editor_surname_first,
+                                              self.config.other_editors_surname_first)
 
         return editors
 
@@ -331,18 +370,31 @@ class TemplateBuilder:
         :return: a string of creators
         """
         creators = ""
+        is_primary = True
 
         if self.config.creators_item_name in item:
             for creator in item[self.config.creators_item_name][:-1]:
                 if creators != "":
                     creators += self.config.creators_delimiter[rule]
+                    is_primary = False
 
-                creators += self._creators_formatter(creator)
+                creators += self._person_formatter(creator, is_primary, rule,
+                                                   self.config.creator_field_top_level,
+                                                   self.config.creator_field_given_name,
+                                                   self.config.creator_field_last_name,
+                                                   self.config.primary_creator_surname_first,
+                                                   self.config.other_creators_surname_first)
 
             if creators != "":
                 creators += self.config.creators_terminal_delimiter[rule]
+                is_primary = False
 
-            creators += self._creators_formatter(item[self.config.creators_item_name][-1])
+            creators += self._person_formatter(item[self.config.creators_item_name][-1], is_primary, rule,
+                                               self.config.creator_field_top_level,
+                                               self.config.creator_field_given_name,
+                                               self.config.creator_field_last_name,
+                                               self.config.primary_creator_surname_first,
+                                               self.config.other_creators_surname_first)
 
         return creators
 

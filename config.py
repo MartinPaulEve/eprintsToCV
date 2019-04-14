@@ -156,20 +156,20 @@ item_templates_new_date = {'pdf': {
 }
 
 # the delimiter between creators
-creators_delimiter = {'pdf': '; ',
-                      'html': '; '}
+creators_delimiter = {'pdf': ', ',
+                      'html': ', '}
 
 # the delimiter between editors
-editors_delimiter = {'pdf': '; ',
-                     'html': '; '}
+editors_delimiter = {'pdf': ', ',
+                     'html': ', '}
 
 # the terminal delimiter between creators
-creators_terminal_delimiter = {'pdf': '; and ',
-                               'html': '; and '}
+creators_terminal_delimiter = {'pdf': ', and ',
+                               'html': ', and '}
 
 # the terminal delimiter between editors
-editors_terminal_delimiter = {'pdf': '; and ',
-                              'html': '; and '}
+editors_terminal_delimiter = {'pdf': ', and ',
+                              'html': ', and '}
 
 # the prefix for editors after a creators string
 editors_prefix = {'pdf': ", ed. by ",
@@ -255,3 +255,20 @@ editors_item_name = 'editors'
 editor_field_top_level = 'name'
 editor_field_given_name = 'given'
 editor_field_last_name = 'family'
+
+# specify if the primary creator should be surname first (Eve, Martin Paul)
+primary_creator_surname_first = {'pdf': False,
+                                 'html': False}
+
+# specify is other creators should be surname first (Eve, Martin Paul)
+other_creators_surname_first = {'pdf': False,
+                                'html': False}
+
+# specify if the primary editor should be surname first (Eve, Martin Paul)
+primary_editor_surname_first = {'pdf': False,
+                                'html': False}
+
+# specify is other editors should be surname first (Eve, Martin Paul)
+other_editors_surname_first = {'pdf': False,
+                               'html': False}
+
