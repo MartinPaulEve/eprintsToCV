@@ -2,7 +2,7 @@
 
 Usage:
   genCV.py fetch [TYPES ...] [--debug] [--refresh]
-  genCV.py make OUTPUT_TYPES... [--citeproc] [--debug]
+  genCV.py make OUTPUT_TYPES... [--debug]
   genCV.py (-h | --help)
   genCV.py --version
 
@@ -11,7 +11,6 @@ Options:
   --version     Show version.
   --debug       Enable debug output.
   --refresh     Delete cached versions and do a hard refresh from eprints.
-  --citeproc    Use new experimental citeproc mode
 
 Info:
 
@@ -30,6 +29,8 @@ Valid options for "types" for the fetch operation, by default, are:
 These can be extended using the configuration mapping system.
 
 The tool includes two output options by default, "html" and "pdf".
+
+This tool requires a working copy of citeproc-js-server https://github.com/zotero/citeproc-js-server.
 """
 import sys
 
@@ -39,9 +40,8 @@ import pygogo as gogo
 import config
 from citeproc import CiteProc
 from repository import Repository
-from templateBuilder import TemplateBuilder
 
-app = "ePrints CV Generator 2.0"
+app = "ePrints CV Generator 2.1"
 
 log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 formatter = logging.Formatter(log_format)
@@ -74,17 +74,11 @@ def main(args):
                 repo.fetch(config.default_types)
 
         elif 'make' in args and args['make']:
-
-            if '--citeproc' in args and args['--citeproc']:
-                citeproc = CiteProc(repo, config, logger)
-                citeproc.build(args['OUTPUT_TYPES'])
-            else:
-                template_builder = TemplateBuilder(repo, config, logger)
-                template_builder.build(args['OUTPUT_TYPES'])
+            citeproc = CiteProc(repo, config, logger)
+            citeproc.build(args['OUTPUT_TYPES'])
     finally:
         # always try to shutdown the citeproc server
-        if '--citeproc' in args and args['--citeproc']:
-            citeproc.shutdown()
+        citeproc.shutdown()
 
 
 if __name__ == "__main__":

@@ -1,7 +1,6 @@
 import os
 import re
 import subprocess
-import json
 from datetime import datetime
 
 import requests
@@ -122,7 +121,8 @@ class CiteProc:
 
         return template
 
-    def _build_date(self, item):
+    @staticmethod
+    def _build_date(item):
         """
         Builds a date for an item
         :param item: The item on which to work
@@ -164,9 +164,57 @@ class CiteProc:
             if 'oa_status' in item and item['oa_status'] == 'gold' and 'official_url' in item:
                 item['uri'] = item['official_url']
 
-    def _substitute_item_template(self, template, citeproc, the_date, item):
+    def _build_oa_status(self, item, rule):
         """
-        Substitutes variables into an item template. This handles [[year]] and [[citeproc]].
+        Builds an open access status for an item
+        :param item: The item on which to work
+        :param rule: The rule on which to operate
+        :return: a string of the OA status of the item
+        """
+        oa_status = ""
+
+        if rule in self.config.oa_status:
+            oa_status = self.config.oa_status[rule]
+            non_oa_status = self.config.non_oa_status[rule]
+
+            if 'oa_status' in item:
+                if item['oa_status'] == 'green' or item['oa_status'] == 'gold':
+                    oa_color = 'goldenrod' if item['oa_status'] == 'gold' else item['oa_status']
+                    if 'files' in item:
+                        oa_status = oa_status.replace('[[oa_uri]]',
+                                                      item["files"][0]["url"]).replace('[[oa_color]]',
+                                                                                       oa_color).replace('[[doc]]',
+                                                                                                         '')
+                    elif 'documents' in item:
+                        if len(item['documents']) > 1:
+                            for doc in item['documents']:
+                                if 'formatdesc' in doc:
+                                    oa_status = oa_status.replace('[[oa_uri]]',
+                                                                  doc["uri"]).replace('[[oa_color]]',
+                                                                                      oa_color).replace(
+                                        '[[doc]]', ' {0}'.format(doc["formatdesc"]))
+                                else:
+                                    oa_status = oa_status.replace('[[oa_uri]]',
+                                                                  doc["uri"]).replace('[[oa_color]]',
+                                                                                      oa_color).replace(
+                                        '[[doc]]', '')
+                        else:
+                            oa_status = oa_status.replace('[[oa_uri]]',
+                                                          item["documents"][0]["uri"]).replace('[[oa_color]]',
+                                                                                               oa_color).replace(
+                                '[[doc]]', '')
+                    else:
+                        oa_status = non_oa_status.replace('[[email]]', self.config.email).replace('[[title]]',
+                                                                                                  item['title'])
+            else:
+                oa_status = non_oa_status.replace('[[email]]', self.config.email).replace('[[title]]', item['title'])
+
+        return oa_status
+
+    @staticmethod
+    def _substitute_item_template(template, citeproc, the_date, item, oa_status):
+        """
+        Substitutes variables into an item template. This handles [[year]], [[oa_status]] and [[citeproc]].
         :param template: the template string
         :param the_date: the date to use
         :param item: the eprints item
@@ -180,6 +228,7 @@ class CiteProc:
         # special fields
         line = template.replace('[[citeproc]]', citeproc)
         line = line.replace('[[year]]', str(the_date))
+        line = line.replace('[[oa_status]]', oa_status)
 
         return line
 
@@ -232,6 +281,9 @@ class CiteProc:
 
                 # setup official links for gold OA
                 self._link_to_official_url_if_gold_oa(item, rule)
+
+                # build the oa_status
+                oa_status = self._build_oa_status(item, rule)
 
                 # build the JSON
                 identifier = '{0}-{1}'.format(counter, the_date)
@@ -315,12 +367,12 @@ class CiteProc:
                     if current_date != the_date:
                         line = self._substitute_item_template(item_templates_new_date,
                                                               json_response['bibliography'][1][0], the_date,
-                                                              item)
+                                                              item, oa_status)
                         current_date = the_date
                     else:
                         line = self._substitute_item_template(item_templates,
                                                               json_response['bibliography'][1][0], the_date,
-                                                              item)
+                                                              item, oa_status)
 
                     output_string += line
 
