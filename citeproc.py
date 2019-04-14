@@ -1,3 +1,4 @@
+import os
 import re
 import subprocess
 import json
@@ -152,10 +153,20 @@ class CiteProc:
         for italic in self.cached_italic_regexen:
             item['title'] = re.sub(italic, r'\1<i>\2</i>\3', item['title'])
 
+    def _link_to_official_url_if_gold_oa(self, item, rule):
+        """
+        If setting is enabled, change the link to the official URL if it's open access
+        :param item: The item on which to work
+        :param rule: The rule on which to operate
+        :return: nothing
+        """
+        if self.config.gold_oa_direct_link[rule]:
+            if 'oa_status' in item and item['oa_status'] == 'gold' and 'official_url' in item:
+                item['uri'] = item['official_url']
+
     def _substitute_item_template(self, template, citeproc, the_date, item):
         """
-        Substitutes variables into an item template. There are six special tags: year, creators, editors,
-        trailingcommacreators, oa_status, and volume. The rest are drawn from the item dictionary.
+        Substitutes variables into an item template. This handles [[year]] and [[citeproc]].
         :param template: the template string
         :param the_date: the date to use
         :param item: the eprints item
@@ -163,8 +174,8 @@ class CiteProc:
         """
 
         # horrible hack
-        citeproc = citeproc.replace('<div', '<span')
-        citeproc = citeproc.replace('</div', '</span')
+        citeproc = citeproc.replace('<div', '<a href="{0}"'.format(item['uri']))
+        citeproc = citeproc.replace('</div', '</a')
 
         # special fields
         line = template.replace('[[citeproc]]', citeproc)
@@ -218,6 +229,9 @@ class CiteProc:
 
                 # italicize title
                 self._italicize_titles(item, rule)
+
+                # setup official links for gold OA
+                self._link_to_official_url_if_gold_oa(item, rule)
 
                 # build the JSON
                 identifier = '{0}-{1}'.format(counter, the_date)
