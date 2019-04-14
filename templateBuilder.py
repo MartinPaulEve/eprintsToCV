@@ -227,7 +227,10 @@ class TemplateBuilder:
                 editors = self.config.editors_prefix[rule]
             if editors != self.config.editors_prefix[rule]:
                 is_primary = False
-                editors += self.config.editors_terminal_delimiter[rule]
+                if len(item[self.config.editors_item_name]) > 2:
+                    editors += self.config.editors_terminal_delimiter[rule]
+                else:
+                    editors += self.config.editors_terminal_delimiter_two[rule]
 
             editors += self._person_formatter(item[self.config.editors_item_name][-1], is_primary, rule,
                                               self.config.creator_field_top_level,
@@ -386,7 +389,10 @@ class TemplateBuilder:
                                                    self.config.other_creators_surname_first)
 
             if creators != "":
-                creators += self.config.creators_terminal_delimiter[rule]
+                if len(item[self.config.creators_item_name]) > 2:
+                    creators += self.config.creators_terminal_delimiter[rule]
+                else:
+                    creators += self.config.creators_terminal_delimiter_two[rule]
                 is_primary = False
 
             creators += self._person_formatter(item[self.config.creators_item_name][-1], is_primary, rule,

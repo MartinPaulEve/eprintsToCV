@@ -171,6 +171,14 @@ creators_terminal_delimiter = {'pdf': ', and ',
 editors_terminal_delimiter = {'pdf': ', and ',
                               'html': ', and '}
 
+# the terminal delimiter between creators when there are only two creators
+creators_terminal_delimiter_two = {'pdf': ' and ',
+                                   'html': ' and '}
+
+# the terminal delimiter between editors when there are only two editors
+editors_terminal_delimiter_two = {'pdf': ' and ',
+                                  'html': ' and '}
+
 # the prefix for editors after a creators string
 editors_prefix = {'pdf': ", ed. by ",
                   'html': ", ed. by "}
