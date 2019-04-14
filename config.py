@@ -172,8 +172,8 @@ editors_terminal_delimiter = {'pdf': '; and ',
                               'html': '; and '}
 
 # the prefix for editors after a creators string
-editors_prefix = {'pdf': "; ed. by ",
-                  'html': "; ed. by "}
+editors_prefix = {'pdf': ", ed. by ",
+                  'html': ", ed. by "}
 
 # whether outer quotes are single or double
 outer_quotes_single = False
@@ -208,10 +208,42 @@ exclude_venues = {'pdf': {
         'other_articles': 'martineve.com',
     }}
 
-italicize_titles = ['Cloud Atlas', 'Abortion Eve', 'I’m Jack', 'Station Eleven', '2666', 'Point Omega',
-                    'Affinity', 'C', 'Saint Antony in His Desert', 'Enumerations: Data and Literary Study',
-                    'Making Literature Now', 'Mere Reading: The Poetics of Wonder in Modern American Novels',
-                    'Anti-Book: On the Art and Politics of Radical Publishing']
+# whether to italicize titles within specific rules
+italicize_titles = {'pdf': True,
+                    'html': True}
+
+# a list of titles to italicize
+# NB for this to work your CSS in any HTML must include:
+# i i {
+#   font-style: normal;
+# }
+# Ordering does matter and replacements take place in the order specified
+titles_to_italicize = ['Cloud Atlas', 'Abortion Eve', 'I’m Jack', 'Station Eleven', 'Point Omega',
+                       'Affinity', 'C', 'Saint Antony in His Desert', 'Enumerations: Data and Literary Study',
+                       'Making Literature Now', 'Mere Reading: The Poetics of Wonder in Modern American Novels',
+                       'Anti-Book: On the Art and Politics of Radical Publishing',
+                       'The Cruft of Fiction: Mega-Novels and the Science of Paying Attention',
+                       'Digital Humanities: Knowledge and Critique in a Digital Age',
+                       'Composition, Creative Writing Studies and the Digital Humanities',
+                       'The Maximalist Novel: From Thomas Pynchon\'s Gravity\'s Rainbow to Roberto Bolaño\'s 2666',
+                       'Gravity\'s Rainbow', '2666', 'Literature and the Public Good',
+                       'Foucault on the Politics of Parrhesia',
+                       'A New Republic of Letters: Memory and Scholarship in the Age of Digital Reproduction',
+                       'Laruelle Against the Digital',
+                       'The Open-Source Everything Manifesto: Transparency, Truth, and Trust',
+                       'Althusser and His Contemporaries: Philosophy\'s Perpetual War',
+                       'Thomas Pynchon and the American Counterculture',
+                       'Humanities In the Twenty-First Century: Beyond Utility and Markets',
+                       'Terrorism and Temporality In The Works of Thomas Pynchon and Don DeLillo',
+                       'American Postmodernist Fiction and the Past',
+                       'Thomas Pynchon & the Dark Passages of History', 'Pynchon and Relativity',
+                       'The Cambridge Companion to Thomas Pynchon', 'Interdisciplinarity',
+                       'Local Transcendence: Postmodern Historiography and the Database', 'The Time That Remains',
+                       'The Ferryman', 'The Third Policeman', 'The White Devil', 'The Goat, or Who is Sylvia',
+                       'Nice Fish', 'The Man Who Knew Infinity', 'No’s Knife', 'The Alchemist', 'JR',
+                       'The Glass Bead Game', 'Pynchon Notes', 'Cow Country', 'Twenty-First-Century Drama',
+                       'A Visit from the Goon Squad', 'Mason & Dixon', 'Against the Day', 'Underworld'
+                       ]
 
 # specify the names of the special fields
 creators_item_name = 'creators'

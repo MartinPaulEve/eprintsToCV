@@ -134,6 +134,11 @@ h1 {
   line-height: 135%;
 }
 
+/* Nested italics */
+i i {
+  font-style: normal;
+}
+
 .sectionheader {
   width:100%;
   border-bottom: 1px;

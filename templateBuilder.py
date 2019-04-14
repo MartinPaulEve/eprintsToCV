@@ -10,6 +10,8 @@ class TemplateBuilder:
         self.config = config
         self.logger = logger
 
+        self.cached_italic_regexen = []
+
     def build(self, rules):
         """
         Run an output ruleset
@@ -108,7 +110,7 @@ class TemplateBuilder:
                 self._link_to_official_url_if_gold_oa(item, rule)
 
                 # italicize title
-                self._italicize_titles(item)
+                self._italicize_titles(item, rule)
 
                 if current_date != the_date:
                     line = self._substitute_item_template(item_templates_new_date, the_date, creators, editors, volume,
@@ -197,14 +199,23 @@ class TemplateBuilder:
 
         return editors
 
-    def _italicize_titles(self, item):
+    def _italicize_titles(self, item, rule):
         """
         Italicizes titles
         :param item: The item on which to work
+        :param rule: The current rule
         :return: nothing
         """
-        for italic in self.config.italicize_titles:
-            item['title'] = re.sub(r'(\W|^)({0})(\W|$)'.format(italic), r'<i>\1\2\3</i>', item['title'])
+        if not self.config.italicize_titles[rule]:
+            return
+
+        # build a cached list of italic regexen if it doesn't exist
+        if len(self.cached_italic_regexen) == 0:
+            for italic in self.config.titles_to_italicize:
+                self.cached_italic_regexen.append(re.compile(r'(\W|^)({0})(\W|$)'.format(italic)))
+
+        for italic in self.cached_italic_regexen:
+            item['title'] = re.sub(italic, r'\1<i>\2</i>\3', item['title'])
 
     def _build_date(self, item):
         """
