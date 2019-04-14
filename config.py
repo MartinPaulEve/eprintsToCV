@@ -280,3 +280,5 @@ primary_editor_surname_first = {'pdf': False,
 other_editors_surname_first = {'pdf': False,
                                'html': False}
 
+# experimental citeproc support
+citeproc_js_server_directory = '/home/Mounts/SIXTB/Documents/Programming/citeproc-js-server'

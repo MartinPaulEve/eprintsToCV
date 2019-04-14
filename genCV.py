@@ -2,7 +2,7 @@
 
 Usage:
   genCV.py fetch [TYPES ...] [--debug] [--refresh]
-  genCV.py make OUTPUT_TYPES... [--debug]
+  genCV.py make OUTPUT_TYPES... [--citeproc] [--debug]
   genCV.py (-h | --help)
   genCV.py --version
 
@@ -11,6 +11,7 @@ Options:
   --version     Show version.
   --debug       Enable debug output.
   --refresh     Delete cached versions and do a hard refresh from eprints.
+  --citeproc    Use new experimental citeproc mode
 
 Info:
 
@@ -34,6 +35,7 @@ from docopt import docopt
 import logging
 import pygogo as gogo
 import config
+from citeproc import CiteProc
 from repository import Repository
 from templateBuilder import TemplateBuilder
 
@@ -59,6 +61,12 @@ def main(args):
 
     repo = Repository(config, logger, args['--refresh'])
 
+    citeproc = None
+
+    # start the citeproc server if the flag is passed
+    if '--citeproc' in args and args['--citeproc']:
+        citeproc = CiteProc(config, logger)
+
     if 'fetch' in args and args['fetch']:
         if len(args['TYPES']) > 0:
             repo.fetch(args['TYPES'])
@@ -68,6 +76,9 @@ def main(args):
     elif 'make' in args and args['make']:
         template_builder = TemplateBuilder(repo, config, logger)
         template_builder.build(args['OUTPUT_TYPES'])
+
+    if '--citeproc' in args and args['--citeproc']:
+        citeproc.shutdown()
 
 
 if __name__ == "__main__":
