@@ -16,7 +16,7 @@ class CiteProc:
 
         # start the citeproc server
         self.init_commands = ['screen -S serve_npm -d -m bash -c "npm start"',
-                              'sleep 2']
+                              'sleep {0}'.format(self.config.citeproc_delay)]
 
         for shell_script in self.init_commands:
             subprocess.call(shell_script, shell=True, cwd=self.config.citeproc_js_server_directory)

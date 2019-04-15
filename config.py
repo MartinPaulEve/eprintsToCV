@@ -179,7 +179,7 @@ editor_field_given_name = 'given'
 editor_field_last_name = 'family'
 
 # citeproc support
-citeproc_js_server_directory = '/home/Mounts/SIXTB/Documents/Programming/citeproc-js-server'
+citeproc_js_server_directory = '/home/martin/Documents/Programming/citeproc-js-server'
 
 # define the item templates in citeproc mode
 citeproc_item_templates = {'pdf': {
@@ -246,3 +246,7 @@ citeproc_style = {'pdf': 'modern-humanities-research-association',
 
 # the fire-up address of the citeproc server
 citeproc_server = 'http://127.0.0.1:8085'
+
+# citeproc startup delay
+citeproc_delay = 5
+
