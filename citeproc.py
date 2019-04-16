@@ -1,6 +1,7 @@
 import os
 import re
 import subprocess
+from subprocess import Popen, PIPE, STDOUT
 from datetime import datetime
 
 import requests
@@ -107,6 +108,16 @@ class CiteProc:
             section = re.compile(r'{{' + match + '}}')
             if match in self.config.section_headings[rule]:
                 substitute = self._eprint_substitute(match, rule)
+            elif match.startswith('external:'):
+                # run an external command that yields a section into a specified file
+                # these should be in the format:
+                # external:path_to_executable:working_directory:output_file
+                split_line = match.split(':')
+
+                subprocess.call(split_line[1], shell=True, cwd=split_line[2])
+
+                with open(split_line[3], 'r') as external_file:
+                    substitute = external_file.read()
             else:
                 try:
                     section_file = "sections/" + match
@@ -117,7 +128,7 @@ class CiteProc:
                     self.logger.error('Cannot load section.')
                     return False
 
-            template = section.sub(substitute, template)
+            template = section.sub(str(substitute), template)
 
         return template
 
