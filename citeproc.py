@@ -1,7 +1,7 @@
 import os
 import re
 import subprocess
-from subprocess import Popen, PIPE, STDOUT
+from multiprocessing.pool import Pool
 from datetime import datetime
 
 import requests
@@ -243,6 +243,16 @@ class CiteProc:
 
         return line
 
+    @staticmethod
+    def _get_citeproc_response(citeproc_server, citeproc_style, output, rule):
+        # we have to do this _every_ time sadly because otherwise the CSL substitutes in "---"
+        r = requests.post(
+            '{0}?bibliography=1&responseformat=json&style={1}'.format(citeproc_server,
+                                                                      citeproc_style[rule]),
+            json=output)
+
+        return r.json()
+
     def _eprint_substitute(self, section, rule):
         """
         Substitute in a section from the repository
@@ -280,6 +290,12 @@ class CiteProc:
         else:
             exclude_venues = []
 
+        output_list = []
+        identifier_list = []
+        starmap_args = []
+        the_date_list = []
+        item_list = []
+
         for item in section_items:
             if 'publication' in item and item['publication'] in exclude_venues:
                 item_count -= 1
@@ -289,9 +305,6 @@ class CiteProc:
 
                 # italicize title
                 self._italicize_titles(item, rule)
-
-                # build the oa_status
-                oa_status = self._build_oa_status(item, rule)
 
                 # build the JSON
                 identifier = '{0}-{1}'.format(counter, the_date)
@@ -328,23 +341,41 @@ class CiteProc:
                 # conference stuff
                 self._build_event(identifier, item, items)
 
-                # we have to do this _every_ time sadly because otherwise the CSL substitutes in "---"
-                r = requests.post(
-                    '{0}?bibliography=1&responseformat=json&style={1}'.format(self.config.citeproc_server,
-                                                                              self.config.citeproc_style[rule]),
-                    json=output)
+                output_list.append(output)
+                item_list.append(item)
+                identifier_list.append(identifier)
+                the_date_list.append(the_date)
 
-                json_response = r.json()
-
-                output_string, current_date = self._append_item(current_date, item, item_templates,
-                                                                item_templates_new_date,json_response, oa_status,
-                                                                output_string, the_date)
+                starmap_args.append((self.config.citeproc_server, self.config.citeproc_style, output, rule))
 
                 output = {}
                 items = {}
                 output['items'] = items
 
                 counter += 1
+
+        # spawn requests to the citeproc server using multiprocessing
+        with Pool() as p:
+            json_response = p.starmap(self._get_citeproc_response, starmap_args)
+
+        loop_counter = 0
+
+        for item in section_items:
+            if 'publication' in item and item['publication'] in exclude_venues:
+                pass
+            else:
+
+                # build the oa_status
+                oa_status = self._build_oa_status(item_list[loop_counter], rule)
+
+                output_string, current_date = self._append_item(current_date,
+                                                                item_list[loop_counter],
+                                                                item_templates,
+                                                                item_templates_new_date,
+                                                                json_response[loop_counter], oa_status,
+                                                                output_string, the_date_list[loop_counter])
+
+                loop_counter += 1
 
         section_output = self._finalize_section(header_template, item_count, output_string, rule, section,
                                                 section_template)
