@@ -385,6 +385,8 @@ class CiteProc:
     def _build_container(self, identifier, item, items):
         if 'publication' in item:
             items[identifier]['container-title'] = item['publication']
+        elif 'book_title' in item:
+            items[identifier]['container-title'] = item['book_title']
 
     def _finalize_section(self, header_template, item_count, output_string, rule, section, section_template):
         if item_count > 0:
