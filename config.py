@@ -47,7 +47,10 @@ editorial = {'all_books': "ANY",
              'book_chapters': "ANY",
              'conference_items': "ANY"}
 
-# this determines the book review conditions for each input type (if the text starts with "Review of"
+# the text that starts a review
+review_of = "Review of"
+
+# this determines the book review conditions for each input type (if the text starts with the value of config.review_of)
 book_review = {'all_books': False,
                'unedited_books': False,
                'edited_books': False,

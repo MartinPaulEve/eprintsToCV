@@ -196,11 +196,12 @@ class Repository:
                 # this type allows both book review and non-book-review items
                 filtered_types.append(potential_type)
 
-            elif self.config.book_review[potential_type] and item['title'].startswith("Review of"):
+            elif self.config.book_review[potential_type] and item['title'].startswith(self.config.review_of):
                 # this type allows only book reviews
                 filtered_types.append(potential_type)
 
-            elif not self.config.book_review[potential_type] and item['title'].startswith("Review of") == False:
+            elif not self.config.book_review[potential_type] and \
+                    item['title'].startswith(self.config.review_of) is False:
                 # this type allows only non-book-reviews
                 filtered_types.append(potential_type)
 
