@@ -34,6 +34,11 @@ Valid options for "types" for the fetch operation, by default, are:
 
 These can be extended using the configuration mapping system.
 
+An example of default usage might be:
+
+python3 genCV.py fetch unedited_books edited_books peer_reviewed_articles --refresh --debug
+python3 genCV.py make pdf html
+
 The tool includes two output options by default, "html" and "pdf".
 
 This tool requires a working copy of citeproc-js-server https://github.com/zotero/citeproc-js-server to be installed.
