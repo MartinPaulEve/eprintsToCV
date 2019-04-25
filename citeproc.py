@@ -335,6 +335,9 @@ class CiteProc:
                 # volume and issue
                 self._build_volume(identifier, item, items)
 
+                # page range
+                self._build_pages(identifier, item, items)
+
                 # doi
                 self._build_identifier(identifier, item, items, rule)
 
@@ -442,6 +445,10 @@ class CiteProc:
                 items[identifier]['issue'] = int(item['number'])
             except ValueError:
                 items[identifier]['issue'] = item['number']
+
+    def _build_pages(self, identifier, item, items):
+        if 'pagerange' in item:
+            items[identifier]['page'] = item['pagerange']
 
     def _build_editors(self, identifier, item, items):
         # build the editors list
