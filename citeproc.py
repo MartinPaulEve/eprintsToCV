@@ -439,7 +439,11 @@ class CiteProc:
 
     def _build_volume(self, identifier, item, items):
         if 'volume' in item:
-            items[identifier]['volume'] = item['volume']
+            try:
+                items[identifier]['volume'] = int(item['volume'])
+            except ValueError:
+                items[identifier]['volume'] = item['volume']
+
         if 'number' in item:
             try:
                 items[identifier]['issue'] = int(item['number'])
