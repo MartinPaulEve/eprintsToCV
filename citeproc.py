@@ -146,6 +146,22 @@ class CiteProc:
 
         return the_date
 
+    @staticmethod
+    def _build_precise_date(item):
+        """
+        Builds a date for an item
+        :param item: The item on which to work
+        :return: a formatted date
+        """
+        try:
+            the_date = [datetime.strptime(item['date'], "%Y-%m-%d").year,
+                        datetime.strptime(item['date'], "%Y-%m-%d").month,
+                        datetime.strptime(item['date'], "%Y-%m-%d").day]
+        except:
+            the_date = CiteProc._build_date(item)
+
+        return the_date
+
     def _italicize_titles(self, item, rule):
         """
         Italicizes titles
@@ -436,6 +452,12 @@ class CiteProc:
         if 'event_location' in item:
             items[identifier]['event-place'] = item['event_location']
             items[identifier]['publisher-place'] = item['event_location']
+
+            # build a more precise date
+            new_date = CiteProc._build_precise_date(item)
+
+            if not isinstance(new_date, int) and len(new_date) > 1:
+                items[identifier]['issued'] = {'date-parts': [new_date]}
 
     def _build_volume(self, identifier, item, items):
         if 'volume' in item:
