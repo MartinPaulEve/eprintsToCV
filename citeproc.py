@@ -433,9 +433,9 @@ class CiteProc:
     def _build_event(self, identifier, item, items):
         if 'event_title' in item:
             items[identifier]['event'] = item['event_title']
-            items[identifier]['container-title'] = item['event_title']
         if 'event_location' in item:
             items[identifier]['event-place'] = item['event_location']
+            items[identifier]['publisher-place'] = item['event_location']
 
     def _build_volume(self, identifier, item, items):
         if 'volume' in item:
