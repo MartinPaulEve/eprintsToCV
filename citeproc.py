@@ -21,9 +21,11 @@ class CiteProc:
         for port in config.citeproc_ports:
             self.init_commands.append('screen -S serve_npm{0} -d -m bash -c "node lib/citeServer.js --port {0}"'.format(port))
 
-        #self.init_commands.append('sleep {0}'.format(self.config.citeproc_delay))
-
     def start(self):
+        """
+        Start the NPM citeproc-js server
+        :return: Nothing
+        """
         for shell_script in self.init_commands:
             subprocess.call(shell_script, shell=True, cwd=self.config.citeproc_js_server_directory)
         time.sleep(self.config.citeproc_delay)
@@ -269,7 +271,6 @@ class CiteProc:
 
     @staticmethod
     def _get_citeproc_response(citeproc_server, citeproc_style, output, rule, port):
-        #print(port)
         # we have to do this _every_ time sadly because otherwise the CSL substitutes in "---"
         r = requests.post(
             '{0}?bibliography=1&responseformat=json&style={1}'.format(citeproc_server.format(port),
@@ -413,10 +414,14 @@ class CiteProc:
         return section_output
 
     def _build_container(self, identifier, item, items):
-        if 'publication' in item:
-            items[identifier]['container-title'] = item['publication']
-        elif 'book_title' in item:
-            items[identifier]['container-title'] = item['book_title']
+        # if the type is 'book', don't add a container
+        # this is because eprints seems sometimes to add book_title and title to a book
+        # in turn, this causes us citeproc problems
+        if item['type'] != 'book':
+            if 'publication' in item:
+                items[identifier]['container-title'] = item['publication']
+            elif 'book_title' in item:
+                items[identifier]['container-title'] = item['book_title']
 
     def _finalize_section(self, header_template, item_count, output_string, rule, section, section_template):
         if item_count > 0:
