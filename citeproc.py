@@ -4,6 +4,7 @@ import requests
 import subprocess
 from datetime import datetime
 from multiprocessing.pool import Pool
+import time
 
 
 class CiteProc:
@@ -20,11 +21,12 @@ class CiteProc:
         for port in config.citeproc_ports:
             self.init_commands.append('screen -S serve_npm{0} -d -m bash -c "node lib/citeServer.js --port {0}"'.format(port))
 
-        self.init_commands.append('sleep {0}'.format(self.config.citeproc_delay))
+        #self.init_commands.append('sleep {0}'.format(self.config.citeproc_delay))
 
+    def start(self):
         for shell_script in self.init_commands:
             subprocess.call(shell_script, shell=True, cwd=self.config.citeproc_js_server_directory)
-
+        time.sleep(self.config.citeproc_delay)
         self.logger.info('Started citeproc-js-server(s)')
 
     def shutdown(self):
@@ -36,7 +38,7 @@ class CiteProc:
         shutdown_commands = []
 
         for port in self.config.citeproc_ports:
-            shutdown_commands = ['screen -S serve_npm{0} -X quit'.format(port)]
+            shutdown_commands.append('screen -d -m  bash -c "screen -S serve_npm{0} -X quit"'.format(port))
 
         for shell_script in shutdown_commands:
             subprocess.call(shell_script, shell=True)

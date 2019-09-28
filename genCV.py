@@ -62,9 +62,7 @@ def main(args):
     logger.info(app)
 
     repo = Repository(config, logger, args['--refresh'])
-
     citeproc = CiteProc(repo, config, logger)
-
     try:
         # start the citeproc server if the flag is passed
         if 'fetch' in args and args['fetch']:
@@ -74,6 +72,7 @@ def main(args):
                 repo.fetch(config.default_types)
 
         elif 'make' in args and args['make']:
+            citeproc.start()
             citeproc.build(args['OUTPUT_TYPES'])
     finally:
         # always try to shutdown the citeproc server

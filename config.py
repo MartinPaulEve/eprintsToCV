@@ -167,7 +167,8 @@ titles_to_italicize = ['Cloud Atlas', 'Abortion Eve', 'I’m Jack', 'Station Ele
                        'The Ferryman', 'The Third Policeman', 'The White Devil', 'The Goat, or Who is Sylvia',
                        'Nice Fish', 'The Man Who Knew Infinity', 'No’s Knife', 'The Alchemist', 'JR',
                        'The Glass Bead Game', 'Pynchon Notes', 'Cow Country', 'Twenty-First-Century Drama',
-                       'A Visit from the Goon Squad', 'Mason & Dixon', 'Against the Day', 'Underworld', '1Q84'
+                       'A Visit from the Goon Squad', 'Mason & Dixon', 'Against the Day', 'Underworld', '1Q84',
+                       'Emerald City'
                        ]
 
 # specify the names of the special fields
@@ -251,7 +252,7 @@ citeproc_style = {'pdf': 'modern-humanities-research-association',
 citeproc_server = 'http://127.0.0.1:{0}'
 
 # citeproc startup delay
-citeproc_delay = 5
+citeproc_delay = 7
 
 # citeproc ports
 citeproc_ports = ['8085', '8086', '8087', '8088', '8089', '8090', '8091', '8092', '8093', '8094', '8095', '8096']
