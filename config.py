@@ -248,8 +248,10 @@ citeproc_style = {'pdf': 'modern-humanities-research-association',
                   'html': 'modern-humanities-research-association'}
 
 # the fire-up address of the citeproc server
-citeproc_server = 'http://127.0.0.1:8085'
+citeproc_server = 'http://127.0.0.1:{0}'
 
 # citeproc startup delay
 citeproc_delay = 5
 
+# citeproc ports
+citeproc_ports = ['8085', '8086', '8087', '8088', '8089', '8090', '8091', '8092', '8093', '8094', '8095', '8096']

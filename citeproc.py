@@ -1,10 +1,9 @@
 import os
 import re
-import subprocess
-from multiprocessing.pool import Pool
-from datetime import datetime
-
 import requests
+import subprocess
+from datetime import datetime
+from multiprocessing.pool import Pool
 
 
 class CiteProc:
@@ -16,13 +15,17 @@ class CiteProc:
         self.cached_italic_regexen = []
 
         # start the citeproc server
-        self.init_commands = ['screen -S serve_npm -d -m bash -c "npm start"',
-                              'sleep {0}'.format(self.config.citeproc_delay)]
+        self.init_commands = []
+
+        for port in config.citeproc_ports:
+            self.init_commands.append('screen -S serve_npm{0} -d -m bash -c "node lib/citeServer.js --port {0}"'.format(port))
+
+        self.init_commands.append('sleep {0}'.format(self.config.citeproc_delay))
 
         for shell_script in self.init_commands:
             subprocess.call(shell_script, shell=True, cwd=self.config.citeproc_js_server_directory)
 
-        self.logger.info('Started citeproc-js-server')
+        self.logger.info('Started citeproc-js-server(s)')
 
     def shutdown(self):
         """
@@ -30,7 +33,10 @@ class CiteProc:
         :return: Nothing
         """
 
-        shutdown_commands = ['screen -S serve_npm -X quit']
+        shutdown_commands = []
+
+        for port in self.config.citeproc_ports:
+            shutdown_commands = ['screen -S serve_npm{0} -X quit'.format(port)]
 
         for shell_script in shutdown_commands:
             subprocess.call(shell_script, shell=True)
@@ -260,10 +266,11 @@ class CiteProc:
         return line
 
     @staticmethod
-    def _get_citeproc_response(citeproc_server, citeproc_style, output, rule):
+    def _get_citeproc_response(citeproc_server, citeproc_style, output, rule, port):
+        #print(port)
         # we have to do this _every_ time sadly because otherwise the CSL substitutes in "---"
         r = requests.post(
-            '{0}?bibliography=1&responseformat=json&style={1}'.format(citeproc_server,
+            '{0}?bibliography=1&responseformat=json&style={1}'.format(citeproc_server.format(port),
                                                                       citeproc_style[rule]),
             json=output)
 
@@ -311,8 +318,10 @@ class CiteProc:
         starmap_args = []
         the_date_list = []
         item_list = []
-
+        port_var = 0
         for item in section_items:
+            port = self.config.citeproc_ports[port_var % len(self.config.citeproc_ports)]
+            port_var += 1
             if 'publication' in item and item['publication'] in exclude_venues:
                 item_count -= 1
             else:
@@ -365,7 +374,7 @@ class CiteProc:
                 identifier_list.append(identifier)
                 the_date_list.append(the_date)
 
-                starmap_args.append((self.config.citeproc_server, self.config.citeproc_style, output, rule))
+                starmap_args.append((self.config.citeproc_server, self.config.citeproc_style, output, rule, port))
 
                 output = {}
                 items = {}
@@ -373,7 +382,7 @@ class CiteProc:
 
                 counter += 1
 
-        # spawn requests to the citeproc server using multiprocessing
+        # spawn requests to citeproc server(s) using multiprocessing
         with Pool() as p:
             json_response = p.starmap(self._get_citeproc_response, starmap_args)
 
