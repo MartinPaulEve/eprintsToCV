@@ -70,7 +70,7 @@ class Repository:
 
             try:
                 # download the JSON
-                data = requests.get(self.url).text
+                data = requests.get(self.url, verify=False).text
             except requests.RequestException as exc:
                 self.logger.error("Error fetching eprints data: {0}".format(exc))
                 self._json_loaded = False

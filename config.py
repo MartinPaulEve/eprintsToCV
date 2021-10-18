@@ -98,9 +98,9 @@ output_rules = {'html': ['templates/HTML',
                         'output/Eve-CV-PDF.html',
                         'screen -S serve -d -m bash -c "python3 -m http.server"',
                         'sleep 2',
-                        'google-chrome --headless --disable-gpu --print-to-pdf=./output/Eve-CV.pdf --virtual-time-budget=50000000 --run-all-compositor-stages-before-draw --disable-web-security http://127.0.0.1:8000/output/Eve-CV-PDF.html >/dev/null 2>&1',
+                        'nodejs ./print.js',
                         'screen -S serve -X quit',
-                        'rm output/Eve-CV-PDF.html']}
+                        ]}
 
 # define the section template
 section_template = {'pdf': '<div id="{0}">{1}</div>',

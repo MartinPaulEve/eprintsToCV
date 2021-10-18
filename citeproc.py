@@ -19,7 +19,7 @@ class CiteProc:
         self.init_commands = []
 
         for port in config.citeproc_ports:
-            self.init_commands.append('screen -S serve_npm{0} -d -m bash -c "node lib/citeServer.js --port {0}"'.format(port))
+            self.init_commands.append('screen -S serve_npm{0} -d -m bash -c "node lib/citeServer.js --port {0} > log.txt"'.format(port))
 
     def start(self):
         """

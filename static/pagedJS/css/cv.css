@@ -43,9 +43,6 @@ html, body {
   font-size:26pt;
 }
 
-#acad {
-  break-after:always;
-}
 
 .prefix {
     display: inline-block;

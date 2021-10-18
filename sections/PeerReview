@@ -1,9 +1,17 @@
 <div class="section" id="extexam">
-	<h2 class="sectionheader">EXTERNAL EXAMINATIONS AND SUCCESSFUL Ph.D. VIVAS</h2>
-	<p class="anitemnewdate genericitem"><span class="prefix bold">2018</span><span class="bibitem">Kingston University, MA Literature and Philosophy</span></p>
-	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">University of Leicester, MA in Modern Literature</span></p>
-	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">University of Birmingham, Ph.D. Examination, Dr. Edward Jackson</span></p>
-	<p class="anitemnewdate genericitem"><span class="prefix bold">2017</span><span class="bibitem">Royal Holloway, University of London, Ph.D. Examination, Dr. William Tucker</span></p>
+	<h2 class="sectionheader">EXTERNAL EXAMINATIONS</h2>
+	<p class="anitemnewdate genericitem"><span class="prefix bold">2021</span><span class="bibitem">University of Sheffield, Ph.D. Examination (library and information science)</span></p>
+	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">University of Massachusetts, Boston, Ph.D. dissertation committee (library and information science)</span></p>
+	<p class="anitemnewdate genericitem"><span class="prefix bold">2020</span><span class="bibitem">University of Nottingham, Ph.D. Examination (English literature)</span></p>
+	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">University of Leeds, Ph.D. Examination (English literature)</span></p>
+	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">University of Southampton, Ph.D. Examination (computer science)</span></p>
+	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">Manchester Metropolitan University, MA English Studies (until 2021)</span></p>
+	<p class="anitemnewdate genericitem"><span class="prefix bold">2019</span><span class="bibitem">Loughborough University, BA English Literature, BA English with Digital Humanities, and BA English and American Studies Undergraduate degree programme</span></p>
+	<p class="anitemnewdate genericitem"><span class="prefix bold">2018</span><span class="bibitem">Kingston University, MA Literature and Philosophy (until 2020)</span></p>
+	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">Loughborough, Ph.D. Examination (library and information studies)</span></p>
+	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">University of Leicester, MA in Modern Literature (until 2021)</span></p>
+	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">University of Birmingham, Ph.D. Examination (English literature)</span></p>
+	<p class="anitemnewdate genericitem"><span class="prefix bold">2017</span><span class="bibitem">Royal Holloway, University of London, Ph.D. Examination (English literature)</span></p>
 </div>
 
 <div class="section" id="peereview">
@@ -12,8 +20,10 @@
 	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">AMS Press (book reader reports)</span></p>
 	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem"><i>C21</i></span></p>
 	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">Chicago University Press (book reader reports)</span></p>
+	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem"><i>Contemporary Women's Writing</i></span></p>
 	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem"><i>Convergence</i></span></p>
 	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem"><i>Cultural Science</i></span></p>
+	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem"><i>Digital Scholarship in the Humanities</i></span></p>
 	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem"><i>English: Journal of the English Association</i></span></p>
 	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem"><i>European Journal of American Studies</i></span></p>
 	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem"><i>European Journal of Social Theory</i></span></p>
@@ -21,10 +31,12 @@
 	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem"><i>Foucault Studies</i></span></p>
 	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem"><i>Frontiers in Digital Humanities</i></span></p>
 	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem"><i>IJES: International Journal of English Studies</i></span></p>
+	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">The Leverhulme Trust, United Kingdom (grant reviews)</span></p>
+	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem"><i>LIBER Quarterly</i></span></p>
 	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem"><i>Literary and Linguistic Computing</i></span></p>
 	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">MIT Press (book reader reports)</span></p>
 	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">National Sciences Center, Poland (grant reviews)</span></p>
-	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">Online Information Review</span></p>
+	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem"><i>Online Information Review</i></span></p>
 	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">Oxford University Press</span></p>
 	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">Netherlands Organisation for Health Research and Development (ZonMw) (grant reviews)</span></p>
 	<p class="anitem genericitem"><span class="prefix bold">&nbsp;</span><span class="bibitem">Routledge (book reader reports)</span></p>
