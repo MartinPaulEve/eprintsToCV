@@ -218,7 +218,7 @@ class Repository:
         filtered_types = []
 
         for potential_type in potential_types:
-            # determine whether the potential type matches the review criteria
+            # determine whether the potential type matches the editorial criteria
             if self.config.editorial[potential_type] == 'ANY':
                 # this type allows both edited and non-edited items
                 filtered_types.append(potential_type)

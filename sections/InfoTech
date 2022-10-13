@@ -1,5 +1,8 @@
 <div class="section" id="infotech">
 	<h2 class="sectionheader">INFORMATION TECHNOLOGY</h2>
 	<p class="anitemnewdate genericitem"><span class="prefix bold">2007</span><span class="bibitem">Microsoft Certified Professional  – C# and the .NET Framework</span></p>
-	<p class="anitemn genericitem"><span class="prefix bold"></span><span class="bibitem">Proficient in:  PHP, Python, ASP.NET, SQL, TCL, XHTML, *nix/BSD-variant (including LAMP-stack) system administration</span></p>
+	<p class="anitemn genericitem"><span class="prefix bold"></span><span class="bibitem">Proficient in:  PHP, Python, ASP.NET, SQL, XHTML, *nix/BSD-variant (including LAMP-stack) system administration</span></p>
+	<p class="anitemn genericitem"><span class="prefix bold"></span><span class="bibitem">SQL experience with Postgres, MySQL, SQLite</span></p>
+	<p class="anitemn genericitem"><span class="prefix bold"></span><span class="bibitem">XML and XSLT experience, particularly with JATS and BITS</span></p>
+	<p class="anitemn genericitem"><span class="prefix bold"></span><span class="bibitem">Extensive technical project management experience: Janeway and the Open Library of Humanities</span></p>
 </div>

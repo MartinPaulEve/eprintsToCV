@@ -41,23 +41,30 @@ import config
 from citeproc import CiteProc
 from repository import Repository
 
-app = "ePrints CV Generator 2.1"
+app = "ePrints CV Generator 2.2"
+
+from rich.logging import RichHandler
+
+FORMAT = "%(message)s"
+logging.basicConfig(
+    level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
+)
 
 log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 formatter = logging.Formatter(log_format)
 
-logger = gogo.Gogo(
-    app,
-    low_formatter=formatter,
-    high_formatter=formatter,
-    monolog=True).logger
+logger = logging.getLogger("rich")
+
+logging.getLogger("requests").setLevel(logging.WARNING)
+logging.getLogger("urllib3").setLevel(logging.WARNING)
+
 
 
 def main(args):
     if '--debug' in args and args['--debug']:
         logger.setLevel('DEBUG')
     else:
-        logger.setLevel('INFO')
+        logger.setLevel('DEBUG')
 
     logger.info(app)
 

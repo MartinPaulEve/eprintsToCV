@@ -1,11 +1,9 @@
 <div id="personinfo">
-  <h1 id="person" class="personinfo">Professor Martin Paul Eve</h1>
+  <h1 id="person" class="personinfo">Professor Martin Paul Eve, Ph.D.</h1>
   <p id="cv" class="personinfo"><small><i>Curriculum Vitae</i></small></p>
   <p id="jobtitle" class="personinfo">Professor of Literature, Technology and Publishing</p>
   <p id="jobtitle2" class="personinfo">College Strategic Lead for Digital Education</p>
   <p id="address1" class="personinfo">Birkbeck, University of London</p>
-  <p id="jobtitle3" class="personinfo">and Visiting Professor of Digital Humanities</p>
-  <p id="jobtitle4" class="personinfo">Sheffield Hallam University</p>
   <p class="personinfo">&nbsp;</p>
   <p id="address2" class="personinfo">School of Arts, 43 Gordon Square, London, WC1H 0PD</p>
   <p id="email" class="personinfo">email: <a href="mailto:martin.eve@bbk.ac.uk">martin.eve@bbk.ac.uk</a></p>

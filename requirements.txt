@@ -2,3 +2,4 @@ docopt
 pygogo
 requests
 yappi
+rich
